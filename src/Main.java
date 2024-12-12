@@ -8,6 +8,7 @@ public class Main {
         int roomNumber = Integer.parseInt(scanner.nextLine());
         Room room = RoomFactory.createRoom(roomNumber);
         room = new WiFiDecorator(room);
+        room = new BreakfastDecorator(room);
 
 
         if (room != null) {
