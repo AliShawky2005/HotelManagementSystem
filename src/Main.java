@@ -1,3 +1,4 @@
+
 import java.util.Scanner; // Scanner used for input
 
 public class Main {
@@ -6,12 +7,14 @@ public class Main {
         System.out.println("Enter the room number: ");
         int roomNumber = Integer.parseInt(scanner.nextLine());
         Room room = RoomFactory.createRoom(roomNumber);
+        room = new WiFiDecorator(room);
+
 
         if (room != null) {
 
             System.out.println("\nRoom created successfully:");
-            System.out.println("Room Type: " + room.getClass().getSimpleName());
             System.out.println("Room Price: $" + room.getPrice());
+            System.out.println("Room Description: " + room.getDescription());
             System.out.println(room.bookRoom());
         } else {
 

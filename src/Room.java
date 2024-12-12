@@ -1,9 +1,17 @@
 public abstract class Room {
     protected int roomNumber;
+    protected   String description;
     public Room(int roomNumber) {
         this.roomNumber = roomNumber;
+        description = "Unknown";
     }
     public abstract double getPrice();
+
+    public String getDescription() {
+        return description;
+    }
+
+
     public String bookRoom() {
         return "Room number: " + roomNumber + " has been booked.";
     }
@@ -11,8 +19,10 @@ public abstract class Room {
 
 class singleRoom extends Room{
 
+
     public singleRoom(int roomNumber) {
         super(roomNumber);
+        description = "Single Room";
     }
 
     @Override
@@ -24,6 +34,8 @@ class singleRoom extends Room{
 class doubleRoom extends Room {
     public doubleRoom(int roomNumber) {
         super(roomNumber);
+        description = "Double Room";
+
     }
 
     @Override
@@ -36,6 +48,8 @@ class tripleRoom extends Room{
 
     public tripleRoom(int roomNumber) {
         super(roomNumber);
+        description = "Triple Room";
+
     }
 
     @Override
