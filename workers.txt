@@ -1,0 +1,5 @@
+John Doe,1234567890,3000.00,Receptionist
+Jane Smith,9876543210,4000.00,Manager
+Alex Johnson,5556667777,2500.50,Housekeeper
+Emily Davis,4443332222,3200.75,Cook
+Michael Brown,7778889999,2800.25,Security
