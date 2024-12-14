@@ -1,27 +1,36 @@
 public abstract class Room {
     protected int roomNumber;
-    protected   String description;
-    public Room(int roomNumber) {
+    protected String description;
+    protected int numberOfNights;
+
+    public Room(int roomNumber, int numberOfNights) {
         this.roomNumber = roomNumber;
-        description = "Unknown";
+        this.numberOfNights = numberOfNights;
+        this.description = "Unknown";
     }
+
     public abstract double getPrice();
 
     public String getDescription() {
         return description;
     }
 
-
     public String bookRoom() {
-        return "Room number: " + roomNumber + " has been booked.";
+        return "Room number: " + roomNumber + " has been booked for " + numberOfNights + " nights.";
+    }
+
+    public double calculateTotalPrice() {
+        return getPrice() * numberOfNights;
+    }
+    // Method to return room data as a string
+    public String toFileString() {
+        return roomNumber + "," + description + "," + numberOfNights + "," + getPrice() + "," + calculateTotalPrice();
     }
 }
 
-class singleRoom extends Room{
-
-
-    public singleRoom(int roomNumber) {
-        super(roomNumber);
+class singleRoom extends Room {
+    public singleRoom(int roomNumber, int numberOfNights) {
+        super(roomNumber, numberOfNights);
         description = "Single Room";
     }
 
@@ -32,10 +41,9 @@ class singleRoom extends Room{
 }
 
 class doubleRoom extends Room {
-    public doubleRoom(int roomNumber) {
-        super(roomNumber);
+    public doubleRoom(int roomNumber, int numberOfNights) {
+        super(roomNumber, numberOfNights);
         description = "Double Room";
-
     }
 
     @Override
@@ -44,12 +52,10 @@ class doubleRoom extends Room {
     }
 }
 
-class tripleRoom extends Room{
-
-    public tripleRoom(int roomNumber) {
-        super(roomNumber);
+class tripleRoom extends Room {
+    public tripleRoom(int roomNumber, int numberOfNights) {
+        super(roomNumber, numberOfNights);
         description = "Triple Room";
-
     }
 
     @Override

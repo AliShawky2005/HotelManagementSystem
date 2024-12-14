@@ -1,33 +1,52 @@
-import java.util.Scanner; // Scanner used for input
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 class RoomFactory {
-    public static Room createRoom(int roomNumber) {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            try {
-                System.out.println("Enter room type (Single, Double, Triple): ");
-                String roomType = scanner.nextLine();
 
-                switch (roomType.toLowerCase()) {
-                    case "single":
-                        return new singleRoom(roomNumber);
-                    case "double":
-                        return new doubleRoom(roomNumber);
-                    case "triple":
-                        return new tripleRoom(roomNumber);
-                    default:
-                        throw new IllegalArgumentException("Invalid room type: " + roomType);
-                }
+    public static Room createRoom(int roomNumber, String roomType, int numberOfNights) {
+        try {
+            roomType = roomType.toLowerCase();
+            // Validate room type
+            if (!roomType.equals("single") && !roomType.equals("double") && !roomType.equals("triple")) {
+                throw new IllegalArgumentException("Invalid room type: " + roomType);
             }
-            catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                System.out.println("Would you like to try again? (yes/no): ");
-                String retry = scanner.nextLine();
 
-                if (retry.equalsIgnoreCase("no")) {
-                    System.out.println("Exiting the room creation process.");
-                    return null;
-                }
+            // Create room based on type and number of nights
+            Room room = null;
+            switch (roomType.toLowerCase()) {
+                case "single":
+                    room = new singleRoom(roomNumber, numberOfNights);
+                    break;
+                case "double":
+                    room = new doubleRoom(roomNumber, numberOfNights);
+                    break;
+                case "triple":
+                    room = new tripleRoom(roomNumber, numberOfNights);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid room type: " + roomType);
             }
+
+            // Save the room details to a file
+            saveRoomToFile(room);
+
+            return room;
+        } catch (Exception e) {
+            System.out.println("Error creating room: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Method to save room data to a file
+    private static void saveRoomToFile(Room room) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("rooms.txt", true))) {
+            // Save the room data in a comma-separated format
+            writer.write(room.toFileString());
+            writer.newLine(); // New line after each room entry
+            System.out.println("Room details saved to file.");
+        } catch (IOException e) {
+            System.out.println("Error saving room to file: " + e.getMessage());
         }
     }
 }
