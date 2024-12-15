@@ -1,9 +1,12 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 //for reading and using data from files (users,workers,residents,rooms)
 public class DataStore {
-    private static final String FILE_NAME = "users.txt";
+    private static final String USERS_FILE = "users.txt";
+    private static final String WORKERS_FILE = "workers.txt";
     private static HashMap<String, User> users = new HashMap<>();
 
     // Load users from file at startup
@@ -22,7 +25,7 @@ public class DataStore {
 
     // Load users from file
     private static void loadUsersFromFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(USERS_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -42,13 +45,49 @@ public class DataStore {
 
     // Save users to file
     private static void saveUsersToFile() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(USERS_FILE))) {
             for (User user : users.values()) {
                 bw.write(user.getUsername() + "," + user.getPassword() + "," + user.getRole());
                 bw.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static ArrayList<Worker> loadWorkers() {
+
+        ArrayList<Worker> workers = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(WORKERS_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4) {
+                    String name = parts[0];
+                    String phoneNumber = parts[1];
+                    double salary = Double.parseDouble(parts[2]);
+                    String jobTitle = parts[3];
+                    workers.add(new Worker(name, phoneNumber, salary, jobTitle));
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading workers from file: " + e.getMessage());
+        }
+        return workers;
+    }
+
+    public static void saveWorkers(ArrayList<Worker> workers) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(WORKERS_FILE))) {
+            for (Worker worker : workers) {
+                writer.write(worker.getName() + "," +
+                        worker.getPhoneNumber() + "," +
+                        worker.getSalary() + "," +
+                        worker.getJobTitle());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing workers to file: " + e.getMessage());
         }
     }
 }
