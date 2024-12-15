@@ -10,7 +10,7 @@ public class LateCheckoutDecorator extends RoomDecorator {
 
     @Override
     public String getDescription() {
-        return super.getDescription() + ", with Late Checkout";
+        return super.getDescription() + " - with Late Checkout";
     }
 
     @Override

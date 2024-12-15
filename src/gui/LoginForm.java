@@ -58,7 +58,7 @@ public class LoginForm extends JFrame {
                 if (user != null && user.getPassword().equals(password)) {
                     JOptionPane.showMessageDialog(null, "Login successful! Welcome, " + username);
                     dispose(); // Close login form
-
+                    DataStore.loggedInUser = user;
                     // Open the appropriate dashboard based on user role
                     if (user.getRole() == 'm') {
                         new ManagerDashboard(user);

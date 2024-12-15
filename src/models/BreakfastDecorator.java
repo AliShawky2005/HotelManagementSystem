@@ -10,7 +10,7 @@ public class BreakfastDecorator extends RoomDecorator {
 
     @Override
     public String getDescription() {
-        return super.getDescription() + ", with Breakfast";
+        return super.getDescription() + " - with Breakfast";
     }
 
     @Override

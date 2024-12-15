@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Room;
 import models.User;
 import models.Worker;
 
@@ -11,7 +12,11 @@ import java.util.HashMap;
 public class DataStore {
     private static final String USERS_FILE = "users.txt";
     private static final String WORKERS_FILE = "workers.txt";
+
+    private static final String ROOMS_FILE = "rooms.txt";
     private static HashMap<String, User> users = new HashMap<>();
+
+    public static User loggedInUser = null;
 
     // Load users from file at startup
     static {
@@ -80,6 +85,28 @@ public class DataStore {
         }
         return workers;
     }
+
+//    public static ArrayList<Room> loadRooms() {
+//
+//        ArrayList<Worker> rooms = new ArrayList<>();
+//        try (BufferedReader reader = new BufferedReader(new FileReader(ROOMS_FILE))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                String[] parts = line.split(",");
+//                if (parts.length == 4) {
+//                    String name = parts[0];
+//                    String phoneNumber = parts[1];
+//                    double salary = Double.parseDouble(parts[2]);
+//                    String jobTitle = parts[3];
+//                    workers.add(new Worker(name, phoneNumber, salary, jobTitle));
+//                }
+//            }
+//        } catch (IOException e) {
+//            System.err.println("Error reading workers from file: " + e.getMessage());
+//        }
+//        return rooms;
+//    }
+
 
     public static void saveWorkers(ArrayList<Worker> workers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(WORKERS_FILE))) {

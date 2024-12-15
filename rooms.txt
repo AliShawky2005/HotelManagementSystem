@@ -1,5 +1,2 @@
-203,Single Room,4,100.0,400.0
-33,Double Room,3,200.0,600.0
-233,Triple Room,3,300.0,900.0
-33,Triple Room,4,300.0,1200.0
-6777,Double Room,9,200.0,1800.0
+
+12,Double Room - with WiFi - with Breakfast,5,230.0,1150.0

@@ -10,7 +10,7 @@ public class WiFiDecorator extends RoomDecorator {
 
     @Override
     public String getDescription() {
-        return super.getDescription() + ", with WiFi";
+        return super.getDescription() + " - with WiFi";
     }
 
     @Override

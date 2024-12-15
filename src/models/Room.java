@@ -31,7 +31,7 @@ public abstract class Room {
     }
     // Method to return room data as a string
     public String toFileString() {
-        return roomNumber + "," + description + "," + numberOfNights + "," + getPrice() + "," + calculateTotalPrice();
+        return roomNumber + "," + getDescription() + "," + numberOfNights + "," + getPrice() + "," + calculateTotalPrice();
     }
 }
 

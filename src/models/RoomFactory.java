@@ -30,8 +30,7 @@ public class RoomFactory {
                     throw new IllegalArgumentException("Invalid room type: " + roomType);
             }
 
-            // Save the room details to a file
-            saveRoomToFile(room);
+
 
             return room;
         } catch (Exception e) {
@@ -41,7 +40,7 @@ public class RoomFactory {
     }
 
     // Method to save room data to a file
-    private static void saveRoomToFile(Room room) {
+  public static void saveRoomToFile(Room room) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("rooms.txt", true))) {
             // Save the room data in a comma-separated format
             writer.write(room.toFileString());
