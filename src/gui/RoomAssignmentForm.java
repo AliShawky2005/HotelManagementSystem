@@ -1,16 +1,23 @@
+package gui;
+
+import models.BreakfastDecorator;
+import models.Room;
+import models.RoomFactory;
+import models.WiFiDecorator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HotelManagementUI {
+public class RoomAssignmentForm {
     private JFrame frame;
     private JTextField roomNumberField;
     private JTextField nightsField;
     private JComboBox<String> roomTypeComboBox;
     private JTextArea resultArea;
 
-    public HotelManagementUI() {
+    public RoomAssignmentForm() {
         // Create main frame
         frame = new JFrame("Hotel Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,7 +113,7 @@ public class HotelManagementUI {
                         resultArea.setText("Room Created!\n");
                         resultArea.append("Room Type: " + room.getDescription() + "\n");
                         resultArea.append("Price per Night: $" + room.getPrice() + "\n");
-                        resultArea.append("Total Price for " + room.numberOfNights + " nights: $" + room.calculateTotalPrice() + "\n");
+                        resultArea.append("Total Price for " + room.getNumberOfNights() + " nights: $" + room.calculateTotalPrice() + "\n");
                         resultArea.append(room.bookRoom());
                     }
                 } catch (Exception ex) {
@@ -119,7 +126,4 @@ public class HotelManagementUI {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new HotelManagementUI();
-    }
 }

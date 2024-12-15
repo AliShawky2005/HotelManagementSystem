@@ -1,3 +1,9 @@
+package gui;
+
+import controllers.WorkerController;
+import models.User;
+import models.Worker;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -51,7 +57,8 @@ public class ManagerDashboard extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 viewWorkerDetails();
             }
-        });        viewResidentsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "View Residents clicked!"));
+        });
+        viewResidentsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "View Residents clicked!"));
         trackIncomeButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Track Income clicked!"));
         monitorRoomsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Monitor Rooms clicked!"));
 
@@ -61,7 +68,7 @@ public class ManagerDashboard extends JFrame {
 
     private void viewWorkerDetails() {
         // Create the JFrame
-        JFrame frame = new JFrame("Worker Details");
+        JFrame frame = new JFrame("models.Worker Details");
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

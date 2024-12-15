@@ -1,8 +1,10 @@
+package models;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-class RoomFactory {
+public class RoomFactory {
 
     public static Room createRoom(int roomNumber, String roomType, int numberOfNights) {
         try {

@@ -1,6 +1,13 @@
+package models;
+
 public abstract class Room {
     protected int roomNumber;
     protected String description;
+
+    public int getNumberOfNights() {
+        return numberOfNights;
+    }
+
     protected int numberOfNights;
 
     public Room(int roomNumber, int numberOfNights) {

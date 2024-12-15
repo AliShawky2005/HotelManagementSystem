@@ -1,7 +1,11 @@
+package controllers;
+
+import models.User;
+import models.Worker;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 //for reading and using data from files (users,workers,residents,rooms)
 public class DataStore {
@@ -37,7 +41,7 @@ public class DataStore {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("User file not found. A new one will be created.");
+            System.out.println("models.User file not found. A new one will be created.");
         } catch (IOException e) {
             e.printStackTrace();
         }

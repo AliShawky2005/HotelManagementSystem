@@ -1,5 +1,12 @@
+package gui;
+
+import gui.LoginForm;
+import models.User;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ReceptionistDashboard extends JFrame {
     public ReceptionistDashboard(User user) {
@@ -39,8 +46,12 @@ public class ReceptionistDashboard extends JFrame {
         // Placeholder Actions
         manageResidentsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Manage Residents clicked!"));
         calculateCostsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Calculate Costs clicked!"));
-        assignRoomsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Assign Rooms clicked!"));
-
+        assignRoomsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RoomAssignmentForm();
+            }
+        });
         setVisible(true);
     }
 }
