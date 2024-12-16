@@ -41,7 +41,7 @@ public class RoomFactory {
 
     // Method to save room data to a file
   public static void saveRoomToFile(Room room) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("rooms.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("reservations.txt", true))) {
             // Save the room data in a comma-separated format
             writer.write(room.toFileString());
             writer.newLine(); // New line after each room entry

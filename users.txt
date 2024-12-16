@@ -1,3 +1,4 @@
 rec,123,r
 manager,123,m
+nader,nader,r
 faris,123,m

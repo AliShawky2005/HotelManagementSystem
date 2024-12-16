@@ -1,2 +1,4 @@
-
-12,Double Room - with WiFi - with Breakfast,5,230.0,1150.0
+101,Single Room,false
+102,Double Room,true
+103,Triple Room,false
+104,Single Room,true

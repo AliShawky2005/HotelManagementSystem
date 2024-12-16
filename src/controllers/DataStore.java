@@ -13,7 +13,7 @@ public class DataStore {
     private static final String USERS_FILE = "users.txt";
     private static final String WORKERS_FILE = "workers.txt";
 
-    private static final String ROOMS_FILE = "rooms.txt";
+    private static final String ROOMS_FILE = "reservations.txt";
     private static HashMap<String, User> users = new HashMap<>();
 
     public static User loggedInUser = null;
