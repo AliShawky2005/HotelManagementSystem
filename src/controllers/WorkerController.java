@@ -27,7 +27,6 @@ public class WorkerController {
     public void addWorker(Worker worker) {
         workers.add(worker);
         DataStore.saveWorkers(workers);
-        System.out.println("models.Worker added successfully.");
     }
 
     // Update a worker by name
@@ -36,11 +35,9 @@ public class WorkerController {
             if (workers.get(i).getName().equals(name)) {
                 workers.set(i, updatedWorker);
                 DataStore.saveWorkers(workers);
-                System.out.println("models.Worker updated successfully.");
                 return true;
             }
         }
-        System.out.println("models.Worker not found.");
         return false;
     }
 
@@ -50,11 +47,9 @@ public class WorkerController {
             if (worker.getName().equals(name)) {
                 workers.remove(worker);
                 DataStore.saveWorkers(workers);
-                System.out.println("models.Worker deleted successfully.");
                 return true;
             }
         }
-        System.out.println("models.Worker not found.");
         return false;
     }
 }
