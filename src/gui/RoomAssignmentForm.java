@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RoomAssignmentForm {
@@ -196,9 +197,11 @@ public class RoomAssignmentForm {
             try {
                 int selectedRoomNumber = Integer.parseInt((String) roomNumberComboBox.getSelectedItem());
                 int nights = Integer.parseInt(nightsField.getText().trim());
+                String roomType = roomDescriptionLabel.getText().split(" ")[0];
+                System.out.println(roomType);
 
                 // Room creation
-                Room room = RoomFactory.createRoom(selectedRoomNumber, "single", nights);
+                Room room = RoomFactory.createRoom(selectedRoomNumber, roomType, nights);
 
                 // Apply decorators
                 if (wifiCheckBox.isSelected()) room = new WiFiDecorator(room);
