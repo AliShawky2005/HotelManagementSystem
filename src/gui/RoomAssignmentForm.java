@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RoomAssignmentForm {
@@ -18,7 +17,7 @@ public class RoomAssignmentForm {
     private JTextField nightsField;
     private JCheckBox wifiCheckBox;
     private JCheckBox breakfastCheckBox;
-    private JCheckBox earlyCheckoutCheckBox;
+    private JCheckBox lateCheckoutCheckBox;
     private JButton assignRoomButton;
     private JTextArea resultArea;
     private JButton backButton;
@@ -102,10 +101,10 @@ public class RoomAssignmentForm {
         JPanel checkboxPanel = new JPanel(new FlowLayout());
         wifiCheckBox = new JCheckBox("WiFi");
         breakfastCheckBox = new JCheckBox("Breakfast");
-        earlyCheckoutCheckBox = new JCheckBox("Early Checkout");
+        lateCheckoutCheckBox = new JCheckBox("Late Checkout");
         checkboxPanel.add(wifiCheckBox);
         checkboxPanel.add(breakfastCheckBox);
-        checkboxPanel.add(earlyCheckoutCheckBox);
+        checkboxPanel.add(lateCheckoutCheckBox);
         panel.add(checkboxPanel, gbc);
 
         // Row 5: Assign Button
@@ -206,7 +205,7 @@ public class RoomAssignmentForm {
                 // Apply decorators
                 if (wifiCheckBox.isSelected()) room = new WiFiDecorator(room);
                 if (breakfastCheckBox.isSelected()) room = new BreakfastDecorator(room);
-                if (earlyCheckoutCheckBox.isSelected()) room = new LateCheckoutDecorator(room);
+                if (lateCheckoutCheckBox.isSelected()) room = new LateCheckoutDecorator(room);
 
                 saveReservation(room);
 
