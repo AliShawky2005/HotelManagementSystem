@@ -2,6 +2,7 @@ package gui;
 
 import controllers.WorkerController;
 import gui.WorkerGUI.WorkerDetailsForm;
+import gui.WorkerGUI.WorkerManagementMenu;
 import models.User;
 import models.Worker;
 
@@ -51,8 +52,13 @@ public class ManagerDashboard extends JFrame {
             new LoginForm(); // Redirect to login
         });
 
-        // Placeholder Actions
-        manageWorkersButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Manage Workers clicked!"));
+        manageWorkersButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new WorkerManagementMenu();
+            }
+        });
 
         viewWorkersButton.addActionListener(new ActionListener() {
             @Override
