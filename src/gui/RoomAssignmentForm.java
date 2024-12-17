@@ -220,7 +220,7 @@ public class RoomAssignmentForm {
                 populateRoomComboBox();
 
                 // Display result in the result area
-                resultArea.setText("Room Assigned Successfully!\n");
+                resultArea.setText("Room " + selectedRoomNumber + " Assigned Successfully!\n");
                 resultArea.append("Room Description: " + room.getDescription() + "\n");
                 resultArea.append("Price Per Night: $" + room.getPrice() + "\n");
                 resultArea.append("Total Price: $" + room.calculateTotalPrice() + "\n");
