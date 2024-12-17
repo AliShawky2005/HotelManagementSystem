@@ -1,3 +1,1 @@
-
-12,Double Room - with WiFi - with Breakfast,5,230.0,1150.0
-101,Single Room - with WiFi - with Breakfast - with Late Checkout,5,145.0,725.0
+104,Single Room - with WiFi - with Breakfast,3,390.0,2024-12-17

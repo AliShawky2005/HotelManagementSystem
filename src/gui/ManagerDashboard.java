@@ -52,14 +52,23 @@ public class ManagerDashboard extends JFrame {
 
         // Placeholder Actions
         manageWorkersButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Manage Workers clicked!"));
+
         viewWorkersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 viewWorkerDetails();
             }
         });
+
         viewResidentsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "View Residents clicked!"));
-        trackIncomeButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Track Income clicked!"));
+
+        trackIncomeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new IncomeTrackerForm();
+            }
+        });
         monitorRoomsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Monitor Rooms clicked!"));
 
         setVisible(true);

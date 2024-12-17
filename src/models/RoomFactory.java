@@ -3,9 +3,11 @@ package models;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class RoomFactory {
 
+    // Factory Method to Create Room Based on Room Type
     public static Room createRoom(int roomNumber, String roomType, int numberOfNights) {
         try {
             roomType = roomType.toLowerCase();
@@ -16,7 +18,7 @@ public class RoomFactory {
 
             // Create room based on type and number of nights
             Room room = null;
-            switch (roomType.toLowerCase()) {
+            switch (roomType) {
                 case "single":
                     room = new singleRoom(roomNumber, numberOfNights);
                     break;
@@ -29,25 +31,37 @@ public class RoomFactory {
                 default:
                     throw new IllegalArgumentException("Invalid room type: " + roomType);
             }
-
-
-
             return room;
+
         } catch (Exception e) {
             System.out.println("Error creating room: " + e.getMessage());
             return null;
         }
     }
 
-    // Method to save room data to a file
-  public static void saveRoomToFile(Room room) {
+    // Method to Save Reservation Details to a File
+    public static void saveRoomToFile(Room room) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("reservations.txt", true))) {
-            // Save the room data in a comma-separated format
-            writer.write(room.toFileString());
-            writer.newLine(); // New line after each room entry
-            System.out.println("Room details saved to file.");
+            // Get current date for reservation
+            String currentDate = LocalDate.now().toString();
+
+            // Save reservation details with current date
+            writer.write(room.getRoomNumber() + "," +
+                    room.getDescription() + "," +
+                    room.getNumberOfNights() + "," +
+                    room.calculateTotalPrice() + "," +
+                    currentDate);
+            writer.newLine(); // Add new line after each reservation
+            System.out.println("Reservation details saved to file.");
         } catch (IOException e) {
-            System.out.println("Error saving room to file: " + e.getMessage());
+            System.out.println("Error saving reservation to file: " + e.getMessage());
         }
+    }
+
+    // Method to Update Room Availability in Rooms File
+    public static void updateRoomAvailability(int roomNumber, String availabilityStatus) {
+        // Placeholder logic: Reads from "rooms.txt" and updates availability.
+        // Actual implementation would involve reading, modifying, and overwriting the file.
+        System.out.println("Room availability updated for Room " + roomNumber + " to: " + availabilityStatus);
     }
 }

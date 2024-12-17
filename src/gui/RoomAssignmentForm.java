@@ -20,6 +20,7 @@ public class RoomAssignmentForm {
     private JCheckBox earlyCheckoutCheckBox;
     private JButton assignRoomButton;
     private JTextArea resultArea;
+    private JButton backButton;
 
     private List<RoomInfo> availableRooms;
 
@@ -44,6 +45,19 @@ public class RoomAssignmentForm {
         // Result Panel
         JPanel resultPanel = createResultPanel();
         frame.add(resultPanel, BorderLayout.CENTER);
+
+        // Back Button
+        JPanel backButtonPanel = new JPanel();
+        backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new ReceptionistDashboard(DataStore.loggedInUser);
+            }
+        });
+        backButtonPanel.add(backButton);
+        frame.add(backButtonPanel, BorderLayout.SOUTH);
 
         // Display Frame
         frame.setVisible(true);
@@ -203,14 +217,18 @@ public class RoomAssignmentForm {
                 updateRoomsFile("rooms.txt");
                 populateRoomComboBox();
 
+                // Display result in the result area
                 resultArea.setText("Room Assigned Successfully!\n");
                 resultArea.append("Room Description: " + room.getDescription() + "\n");
-                resultArea.append("Total Price: $" + room.calculateTotalPrice());
+                resultArea.append("Price Per Night: $" + room.getPrice() + "\n");
+                resultArea.append("Total Price: $" + room.calculateTotalPrice() + "\n");
+
             } catch (Exception ex) {
                 resultArea.setText("Error: " + ex.getMessage());
             }
         }
     }
+
 
     // RoomInfo helper class
     private static class RoomInfo {
@@ -230,7 +248,7 @@ public class RoomAssignmentForm {
         public void setAvailable(boolean available) { this.available = available; }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(RoomAssignmentForm::new);
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(RoomAssignmentForm::new);
+//    }
 }

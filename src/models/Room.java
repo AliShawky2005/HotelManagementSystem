@@ -4,6 +4,10 @@ public abstract class Room {
     protected int roomNumber;
     protected String description;
 
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
     public int getNumberOfNights() {
         return numberOfNights;
     }
@@ -33,6 +37,8 @@ public abstract class Room {
     public String toFileString() {
         return roomNumber + "," + getDescription() + "," + numberOfNights + "," + getPrice() + "," + calculateTotalPrice();
     }
+
+
 }
 
 class singleRoom extends Room {
