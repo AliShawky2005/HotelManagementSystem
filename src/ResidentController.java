@@ -161,6 +161,42 @@ public class ResidentController {
             System.err.println("Error saving resident: " + e.getMessage());
         }
     }
+
+    public static boolean editResident(String oldEmail, String newName, String newEmail, int newContactInfo) {
+        for (ResidentController resident : residents) {
+            if (resident.email.equalsIgnoreCase(oldEmail)) {
+                resident.setResidentName(newName);
+                resident.setEmail(newEmail);
+                resident.setContactInfo(newContactInfo);
+                saveAllResidentsToFile();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean deleteResident(String email) {
+        Iterator<ResidentController> iterator = residents.iterator();
+        while (iterator.hasNext()) {
+            ResidentController resident = iterator.next();
+            if (resident.email.equalsIgnoreCase(email)) {
+                iterator.remove();
+                saveAllResidentsToFile();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void saveAllResidentsToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (ResidentController resident : residents) {
+                writer.write(resident.residentName + "," + resident.email + "," + resident.contactInfo + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving residents: " + e.getMessage());
+        }
+    }
 }
 
 class ResidentControllerUI {
