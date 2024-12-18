@@ -163,7 +163,7 @@ public class ResidentController {
             System.err.println("Error loading residents: " + e.getMessage());
         }
     }
-// validates if rresident is new
+// validates if resident is new
     public static boolean isNewResident(String name, String email) {
         for (ResidentController resident : residents) {
             if (resident.residentName.equalsIgnoreCase(name) || resident.email.equalsIgnoreCase(email)) {
