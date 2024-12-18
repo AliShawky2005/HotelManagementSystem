@@ -1,9 +1,7 @@
 package controllers;
-
 import models.Room;
 import models.User;
 import models.Worker;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +10,6 @@ import java.util.HashMap;
 public class DataStore {
     private static final String USERS_FILE = "users.txt";
     private static final String WORKERS_FILE = "workers.txt";
-
     private static final String ROOMS_FILE = "reservations.txt";
     private static HashMap<String, User> users = new HashMap<>();
 
@@ -106,7 +103,6 @@ public class DataStore {
 //        }
 //        return rooms;
 //    }
-
 
     public static void saveWorkers(ArrayList<Worker> workers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(WORKERS_FILE))) {

@@ -63,7 +63,7 @@ public class ResidentController {
 
     public void addService(int serviceIndex) {
         if (serviceIndex >= 1 && serviceIndex <= services.length) {
-            cost += calculateCost(serviceIndex, 0);
+            cost += calculateCost(serviceIndex);
         } else {
             throw new IllegalArgumentException("Invalid service index.");
         }
@@ -101,12 +101,31 @@ public class ResidentController {
             throw new IllegalArgumentException("Invalid phone number length.");
         }
     }
-
-    private double calculateCost(int servicesReceived, int nights) {
+//manager edit the services
+    private double ManagerServices(int servicesReceived) {
         double cost = 0;
         switch (servicesReceived) {
             case 1:
-                cost = 100.00;
+                cost -= 100.00;
+                break;
+            case 2:
+                cost -= 1500.00;
+                break;
+            case 3:
+                cost -= 2500.00;
+                break;
+            case 4:
+                cost -= 10.30;
+                break;
+        }
+        return cost;
+    }
+//services requested by resident
+    private double calculateCost(int servicesReceived) {
+        double cost = 0;
+        switch (servicesReceived) {
+            case 1:
+                cost += 100.00;
                 break;
             case 2:
                 cost += 1500.00;
@@ -144,7 +163,7 @@ public class ResidentController {
             System.err.println("Error loading residents: " + e.getMessage());
         }
     }
-
+// validates if rresident is new
     public static boolean isNewResident(String name, String email) {
         for (ResidentController resident : residents) {
             if (resident.residentName.equalsIgnoreCase(name) || resident.email.equalsIgnoreCase(email)) {
@@ -161,7 +180,7 @@ public class ResidentController {
             System.err.println("Error saving resident: " + e.getMessage());
         }
     }
-
+// trials for edit and delete resident functions
     public static boolean editResident(String oldEmail, String newName, String newEmail, int newContactInfo) {
         for (ResidentController resident : residents) {
             if (resident.email.equalsIgnoreCase(oldEmail)) {
