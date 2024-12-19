@@ -1,19 +1,22 @@
 package controllers;
 
+import gui.RoomAssignmentForm;
 import models.Room;
 import models.User;
 import models.Worker;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 //for reading and using data from files (users,workers,residents,rooms)
 public class DataStore {
     private static final String USERS_FILE = "users.txt";
     private static final String WORKERS_FILE = "workers.txt";
 
-    private static final String ROOMS_FILE = "reservations.txt";
+    private static final String ROOMS_FILE = "rooms.txt";
     private static HashMap<String, User> users = new HashMap<>();
 
     public static User loggedInUser = null;
@@ -86,27 +89,24 @@ public class DataStore {
         return workers;
     }
 
-//    public static ArrayList<Room> loadRooms() {
-//
-//        ArrayList<Worker> rooms = new ArrayList<>();
-//        try (BufferedReader reader = new BufferedReader(new FileReader(ROOMS_FILE))) {
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                String[] parts = line.split(",");
-//                if (parts.length == 4) {
-//                    String name = parts[0];
-//                    String phoneNumber = parts[1];
-//                    double salary = Double.parseDouble(parts[2]);
-//                    String jobTitle = parts[3];
-//                    workers.add(new Worker(name, phoneNumber, salary, jobTitle));
-//                }
-//            }
-//        } catch (IOException e) {
-//            System.err.println("Error reading workers from file: " + e.getMessage());
-//        }
-//        return rooms;
-//    }
-
+    public static List<RoomAssignmentForm.RoomInfo> loadRoomDataFromFile() {
+        List<RoomAssignmentForm.RoomInfo> rooms = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(ROOMS_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3) {
+                    int roomNumber = Integer.parseInt(parts[0].trim());
+                    String description = parts[1].trim();
+                    boolean available = Boolean.parseBoolean(parts[2].trim());
+                    rooms.add(new RoomAssignmentForm.RoomInfo(roomNumber, description, available));
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error loading room data: " + e.getMessage());
+        }
+        return rooms;
+    }
 
     public static void saveWorkers(ArrayList<Worker> workers) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(WORKERS_FILE))) {
