@@ -402,7 +402,7 @@ class ResidentMenuUI {
         inputPanel.add(OldEmailField);
 
         inputPanel.add(new JLabel("New Email:"));
-      emailField = new JTextField();
+        emailField = new JTextField();
         inputPanel.add(emailField);
 
         inputPanel.add(new JLabel("Contact Info:"));
