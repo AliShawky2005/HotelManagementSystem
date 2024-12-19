@@ -1,6 +1,7 @@
 package gui;
 
 import controllers.WorkerController;
+import gui.ResidentGUI.ResidentDetailsForm;
 import gui.WorkerGUI.WorkerDetailsForm;
 import gui.WorkerGUI.WorkerManagementMenu;
 import models.User;
@@ -68,7 +69,13 @@ public class ManagerDashboard extends JFrame {
             }
         });
 
-        viewResidentsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "View Residents clicked!"));
+        viewResidentsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ResidentDetailsForm();
+
+            }
+        });
 
         trackIncomeButton.addActionListener(new ActionListener() {
             @Override
