@@ -77,7 +77,14 @@ public class ManagerDashboard extends JFrame {
                 new IncomeTrackerForm();
             }
         });
-        monitorRoomsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Monitor Rooms clicked!"));
+
+        monitorRoomsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new RoomsDetailsForm().showDetails();
+            }
+        });
 
         setVisible(true);
     }

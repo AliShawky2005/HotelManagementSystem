@@ -25,7 +25,7 @@ public class RoomAssignmentForm {
     private List<RoomInfo> availableRooms;
 
     public RoomAssignmentForm() {
-        availableRooms = loadRoomDataFromFile("rooms.txt");
+        availableRooms = DataStore.loadRoomDataFromFile();
         initializeUI();
     }
 
@@ -153,24 +153,7 @@ public class RoomAssignmentForm {
     }
 
     // Load room data from file
-    private List<RoomInfo> loadRoomDataFromFile(String fileName) {
-        List<RoomInfo> rooms = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    int roomNumber = Integer.parseInt(parts[0].trim());
-                    String description = parts[1].trim();
-                    boolean available = Boolean.parseBoolean(parts[2].trim());
-                    rooms.add(new RoomInfo(roomNumber, description, available));
-                }
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error loading room data: " + e.getMessage());
-        }
-        return rooms;
-    }
+
 
     // Save reservation to file
     private void saveReservation(Room room) {
@@ -233,7 +216,7 @@ public class RoomAssignmentForm {
 
 
     // RoomInfo helper class
-    private static class RoomInfo {
+    public static class RoomInfo {
         private int roomNumber;
         private String description;
         private boolean available;
