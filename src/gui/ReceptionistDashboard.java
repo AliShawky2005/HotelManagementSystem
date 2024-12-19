@@ -48,7 +48,7 @@ public class ReceptionistDashboard extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-              //  new ResidentMenuUI();
+               new ResidentMenuUI();
             }
         });
 
