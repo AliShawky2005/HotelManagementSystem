@@ -31,7 +31,7 @@ public class ResidentController {
 
 
     public boolean addResident(Resident resident) {
-        if (!isNewResident(resident.getResidentName(), resident.getEmail(),residents)) {
+        if (!isNewResident(resident.getEmail(),residents)) {
             return false;
         }
         residents.add(resident);
@@ -44,9 +44,9 @@ public class ResidentController {
         return Pattern.matches(emailRegex, email);
     }
 
-    private static boolean isNewResident(String name, String email,List<Resident> residents) {
+    private static boolean isNewResident(String email,List<Resident> residents) {
         for (Resident resident : residents) {
-            if (resident.getResidentName().equalsIgnoreCase(name) || resident.getEmail().equalsIgnoreCase(email)) {
+            if (resident.getEmail().equalsIgnoreCase(email)) {
                 return false;
             }
         }

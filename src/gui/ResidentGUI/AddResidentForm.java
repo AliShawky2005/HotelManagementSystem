@@ -102,7 +102,7 @@ public class AddResidentForm {
                     JOptionPane.showMessageDialog(frame, "Resident added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Resident with this name or email already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Resident with this email already exists.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(frame, "An unexpected error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
