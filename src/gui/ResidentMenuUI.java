@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 
 public class ResidentMenuUI {
 
-    private ResidentController controller;
     private JFrame frame;
     private JTextField nameField;
     private JTextField emailField;
@@ -18,90 +17,10 @@ public class ResidentMenuUI {
     private JTextArea costArea;
     private JTextField OldEmailField;
 
-    public ResidentMenuUI() {
 
-        controller = new ResidentController.Builder().build();
-        setupMainMenu();
-    }
 
-    private void setupMainMenu() {
-        frame = new JFrame("Resident Management System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLayout(new GridLayout(4, 1, 10, 10));
 
-        JButton addResidentButton = new JButton("Add Resident");
-        addResidentButton.addActionListener(e -> addResidentUI());
 
-        JButton deleteResidentButton = new JButton("Delete Resident");
-        deleteResidentButton.addActionListener(e -> deleteResidentUI());
-
-        JButton editResidentButton = new JButton("Edit Resident");
-        editResidentButton.addActionListener(e -> editResidentUI());
-
-        frame.add(addResidentButton);
-        frame.add(deleteResidentButton);
-        frame.add(editResidentButton);
-
-        frame.setVisible(true);
-    }
-
-    private void addResidentUI() {
-        frame = new JFrame("Resident Management System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 600);
-        frame.setLayout(new BorderLayout());
-
-        JPanel inputPanel = new JPanel(new GridLayout(5, 3, 10, 10));
-        inputPanel.setBorder(BorderFactory.createTitledBorder("Resident Details"));
-
-        inputPanel.add(new JLabel("Name:"));
-        nameField = new JTextField();
-        inputPanel.add(nameField);
-
-        inputPanel.add(new JLabel("Email:"));
-        emailField = new JTextField();
-        inputPanel.add(emailField);
-
-        inputPanel.add(new JLabel("Contact Info:"));
-        contactField = new JTextField();
-        inputPanel.add(contactField);
-
-        JButton calculateButton = new JButton("Add Service");
-        calculateButton.addActionListener(new CalculateCostListener());
-        inputPanel.add(calculateButton);
-
-        calculateButton = new JButton("remove Service");
-        calculateButton.addActionListener(new ManagerCostListener());
-        inputPanel.add(calculateButton);
-
-        JButton addButton = new JButton("Add Resident");
-        addButton.addActionListener(new AddResidentListener());
-        inputPanel.add(addButton);
-
-        frame.add(inputPanel, BorderLayout.NORTH);
-
-        JPanel servicePanel = new JPanel(new BorderLayout());
-        servicePanel.setBorder(BorderFactory.createTitledBorder("Available Services"));
-
-        servicesArea = new JTextArea();
-        servicesArea.setText(controller.getServicesList());
-        servicesArea.setEditable(false);
-        servicePanel.add(new JScrollPane(servicesArea), BorderLayout.CENTER);
-
-        costArea = new JTextArea(5, 40);
-        costArea.setEditable(false);
-        costArea.setBorder(BorderFactory.createTitledBorder("Total Cost"));
-        servicePanel.add(new JScrollPane(costArea), BorderLayout.SOUTH);
-
-        frame.add(servicePanel, BorderLayout.CENTER);
-
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> setupMainMenu());
-        frame.add(backButton, BorderLayout.SOUTH);
-
-        frame.setVisible(true);
-    }
 
     private void deleteResidentUI() {
         frame.getContentPane().removeAll(); // Clear previous UI components
@@ -190,31 +109,6 @@ public class ResidentMenuUI {
         frame.setVisible(true);
     }
 
-    private class AddResidentListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                String name = nameField.getText();
-                String email = emailField.getText();
-                int contact = Integer.parseInt(contactField.getText());
-
-                if (!ResidentController.isNewResident(name, email)) {
-                    JOptionPane.showMessageDialog(frame, "Resident already exists!");
-                    return;
-                }
-
-                controller.setResidentName(name);
-                controller.setEmail(email);
-                controller.setContactInfo(contact);
-
-                ResidentController.saveResidentToFile(controller);
-
-                JOptionPane.showMessageDialog(frame, "Resident added successfully!");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
-            }
-        }
-    }
 
 
     private class saveButtonListener implements ActionListener {

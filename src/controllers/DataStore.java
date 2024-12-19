@@ -1,7 +1,7 @@
 package controllers;
 
 import gui.RoomAssignmentForm;
-import models.Room;
+import models.Resident;
 import models.User;
 import models.Worker;
 
@@ -15,6 +15,9 @@ import java.util.List;
 public class DataStore {
     private static final String USERS_FILE = "users.txt";
     private static final String WORKERS_FILE = "workers.txt";
+
+    private static final String RESIDENTS_FILE = "residents.txt";
+
 
     private static final String ROOMS_FILE = "rooms.txt";
     private static HashMap<String, User> users = new HashMap<>();
@@ -121,4 +124,50 @@ public class DataStore {
             System.err.println("Error writing workers to file: " + e.getMessage());
         }
     }
+
+    public static List<Resident> loadResidentsFromFile() {
+
+        List<Resident> residents = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(RESIDENTS_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4) {
+                    String name = parts[0];
+                    String email = parts[1];
+                    int contactInfo = Integer.parseInt(parts[2]);
+                    Resident resident = new Resident(name,email,contactInfo);
+                    residents.add(resident);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading residents: " + e.getMessage());
+        }
+
+        return residents;
+    }
+
+    public static void saveResidents(List<Resident> residents) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(WORKERS_FILE))) {
+            for (Resident resident : residents) {
+                writer.write(resident.getResidentName() + "," +
+                        resident.getEmail() + "," +
+                        resident.getContactInfo());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing resident to file: " + e.getMessage());
+        }
+    }
+
+    public static boolean isNewResident(String name, String email) {
+        for (ResidentController resident : residents) {
+            if (resident.residentName.equalsIgnoreCase(name) || resident.email.equalsIgnoreCase(email)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

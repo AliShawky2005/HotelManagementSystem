@@ -1,6 +1,7 @@
 package gui;
 
 import gui.LoginForm;
+import gui.ResidentGUI.ResidentManagementMenu;
 import models.User;
 
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class ReceptionistDashboard extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-               new ResidentMenuUI();
+               new ResidentManagementMenu();
             }
         });
 
