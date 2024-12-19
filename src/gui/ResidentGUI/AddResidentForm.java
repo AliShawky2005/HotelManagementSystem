@@ -1,17 +1,29 @@
 package gui.ResidentGUI;
 
+import controllers.DataStore;
 import controllers.ResidentController;
+import gui.RoomAssignmentForm;
 import models.Resident;
+import models.Room;
+import models.RoomFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 public class AddResidentForm {
 
     private JFrame frame;
-    private JTextField nameField, emailField, contactField, roomNumberField;
+    private JTextField nameField, emailField, contactField;
+
+    private JComboBox roomNumberField;
+    private List<RoomAssignmentForm.RoomInfo> availableRooms;
 
     public AddResidentForm() {
+        availableRooms = DataStore.loadRoomDataFromFile();
         // Frame setup
         frame = new JFrame("Add Resident");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,8 +61,16 @@ public class AddResidentForm {
         inputPanel.add(contactField, gbc);
 
         gbc.gridx = 0; gbc.gridy = 3;
-        inputPanel.add(new JLabel("Room Number:"), gbc);
-        roomNumberField = new JTextField(20);
+
+        inputPanel.add(new JLabel("Select Room Number:"), gbc);
+        gbc.gridx = 1;
+        roomNumberField = new JComboBox<>();
+        populateRoomComboBox();
+
+
+        inputPanel.add(roomNumberField, gbc);
+
+
         gbc.gridx = 1;
         inputPanel.add(roomNumberField, gbc);
 
@@ -79,7 +99,7 @@ public class AddResidentForm {
                 String name = nameField.getText().trim();
                 String email = emailField.getText().trim();
                 String contactText = contactField.getText().trim();
-                int roomNumber = Integer.parseInt(roomNumberField.getText());
+                int roomNumber = Integer.parseInt((String) roomNumberField.getSelectedItem());
 
                 if (name.isEmpty() || email.isEmpty() || contactText.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -111,6 +131,12 @@ public class AddResidentForm {
                 } else {
                     JOptionPane.showMessageDialog(frame, "Resident with this email already exists.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                // Save the reservation to the file
+                //saveReservation(room);
+
+                updateRoomsFile("rooms.txt");
+                populateRoomComboBox();
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(frame, "An unexpected error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -125,4 +151,36 @@ public class AddResidentForm {
         frame.setVisible(true);
     }
 
+
+
+
+    // Populate the room number combo box
+    private void populateRoomComboBox() {
+        roomNumberField.removeAllItems();
+        for (RoomAssignmentForm.RoomInfo room : availableRooms) {
+            if (room.isAvailable()) {
+                roomNumberField.addItem(String.valueOf(room.getRoomNumber()));
+            }
+        }
+    }
+
+    // Save reservation to file
+    private void saveReservation(Room room) {
+        RoomFactory.saveRoomToFile(room);
+    }
+
+    // Update rooms.txt file after marking a room as unavailable
+    private void updateRoomsFile(String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (RoomAssignmentForm.RoomInfo room : availableRooms) {
+                writer.write(room.getRoomNumber() + "," + room.getDescription() + "," + room.isAvailable());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error updating room file: " + e.getMessage());
+        }
+    }
+
 }
+
+
