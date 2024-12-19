@@ -1,5 +1,5 @@
-101,Single Room,true
-102,Double Room,true
+101,Single Room,false
+102,Double Room,false
 103,Triple Room,true
 104,Single Room,false
 105,Single Room,true

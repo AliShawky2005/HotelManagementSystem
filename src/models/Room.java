@@ -3,6 +3,11 @@ package models;
 public abstract class Room {
     protected int roomNumber;
     protected String description;
+    protected String residentEmail; //associated resident
+
+    public String getResidentEmail() {
+        return residentEmail;
+    }
 
     public int getRoomNumber() {
         return roomNumber;
@@ -14,10 +19,11 @@ public abstract class Room {
 
     protected int numberOfNights;
 
-    public Room(int roomNumber, int numberOfNights) {
+    public Room(int roomNumber, int numberOfNights, String residentEmail) {
         this.roomNumber = roomNumber;
         this.numberOfNights = numberOfNights;
         this.description = "Unknown";
+        this.residentEmail = residentEmail;
     }
 
     public abstract double getPrice();
@@ -42,9 +48,11 @@ public abstract class Room {
 }
 
 class singleRoom extends Room {
-    public singleRoom(int roomNumber, int numberOfNights) {
-        super(roomNumber, numberOfNights);
+    public singleRoom(int roomNumber, int numberOfNights, String residentEmail) {
+        super(roomNumber, numberOfNights, residentEmail);
         description = "Single Room";
+
+
     }
 
     @Override
@@ -54,9 +62,10 @@ class singleRoom extends Room {
 }
 
 class doubleRoom extends Room {
-    public doubleRoom(int roomNumber, int numberOfNights) {
-        super(roomNumber, numberOfNights);
+    public doubleRoom(int roomNumber, int numberOfNights, String residentEmail) {
+        super(roomNumber, numberOfNights,residentEmail);
         description = "Double Room";
+
     }
 
     @Override
@@ -66,9 +75,10 @@ class doubleRoom extends Room {
 }
 
 class tripleRoom extends Room {
-    public tripleRoom(int roomNumber, int numberOfNights) {
-        super(roomNumber, numberOfNights);
+    public tripleRoom(int roomNumber, int numberOfNights, String residentEmail) {
+        super(roomNumber, numberOfNights,residentEmail);
         description = "Triple Room";
+
     }
 
     @Override

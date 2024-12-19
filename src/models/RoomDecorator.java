@@ -5,7 +5,7 @@ public abstract class RoomDecorator extends Room {
     protected Room decoratedRoom;
 
     public RoomDecorator(Room decoratedRoom) {
-        super(decoratedRoom.roomNumber,decoratedRoom.numberOfNights);  ;
+        super(decoratedRoom.roomNumber,decoratedRoom.numberOfNights, decoratedRoom.residentEmail);  ;
         this.decoratedRoom = decoratedRoom;
     }
 

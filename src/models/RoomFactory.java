@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class RoomFactory {
 
     // Factory Method to Create Room Based on Room Type
-    public static Room createRoom(int roomNumber, String roomType, int numberOfNights) {
+    public static Room createRoom(int roomNumber, String roomType, int numberOfNights, String residentEmail) {
         try {
             roomType = roomType.toLowerCase();
             // Validate room type
@@ -20,13 +20,13 @@ public class RoomFactory {
             Room room = null;
             switch (roomType) {
                 case "single":
-                    room = new singleRoom(roomNumber, numberOfNights);
+                    room = new singleRoom(roomNumber, numberOfNights, residentEmail);
                     break;
                 case "double":
-                    room = new doubleRoom(roomNumber, numberOfNights);
+                    room = new doubleRoom(roomNumber, numberOfNights, residentEmail);
                     break;
                 case "triple":
-                    room = new tripleRoom(roomNumber, numberOfNights);
+                    room = new tripleRoom(roomNumber, numberOfNights, residentEmail);
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid room type: " + roomType);
@@ -47,6 +47,7 @@ public class RoomFactory {
 
             // Save reservation details with current date
             writer.write(room.getRoomNumber() + "," +
+                    room.getResidentEmail() + "," +
                     room.getDescription() + "," +
                     room.getNumberOfNights() + "," +
                     room.calculateTotalPrice() + "," +

@@ -1,2 +1,4 @@
 pierre,pie_a@o.com,23456
 pie,p_a@o.com,12345
+faris,faris@gmail.com,1123111713
+faris,faris2@gmail.com,1123111713

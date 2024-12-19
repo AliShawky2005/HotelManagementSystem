@@ -104,3 +104,5 @@
 158,Triple Room - with WiFi - with Breakfast,2,450.0,2024-12-17
 162,Single Room,1,100.0,2024-12-17
 166,Double Room - with Late Checkout,1,220.0,2024-12-17
+101,faris@gmail.com,Single Room - with WiFi - with Breakfast,2,260.0,2024-12-19
+102,faris2@gmail.com,Double Room - with WiFi - with Breakfast,1,230.0,2024-12-19

@@ -44,7 +44,7 @@ public class ResidentController {
         return Pattern.matches(emailRegex, email);
     }
 
-    private static boolean isNewResident(String email,List<Resident> residents) {
+    public static boolean isNewResident(String email,List<Resident> residents) {
         for (Resident resident : residents) {
             if (resident.getEmail().equalsIgnoreCase(email)) {
                 return false;
