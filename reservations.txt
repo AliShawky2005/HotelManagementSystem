@@ -1,108 +1,20 @@
-104,Single Room,1,100.0,2023-01-05
-104,Single Room - with WiFi,2,110.0,2023-02-14
-104,Single Room - with WiFi - with Breakfast,3,130.0,2023-03-22
-104,Single Room - with Breakfast,2,120.0,2023-04-10
-109,Double Room - with WiFi - with Breakfast,4,420.0,2023-01-05
-109,Double Room,1,200.0,2023-05-18
-109,Double Room - with WiFi,2,210.0,2023-06-02
-109,Double Room - with Breakfast,3,220.0,2023-07-25
-113,Triple Room,1,300.0,2023-08-13
-113,Triple Room - with WiFi,2,310.0,2023-09-07
-113,Triple Room - with WiFi - with Breakfast,3,330.0,2023-10-02
-113,Triple Room - with Breakfast,2,320.0,2023-11-15
-117,Single Room - with WiFi - with Breakfast,2,220.0,2023-01-05
-117,Single Room - with WiFi,3,210.0,2023-02-27
-117,Single Room - with Breakfast,1,120.0,2023-04-06
-119,Triple Room - with WiFi - with Breakfast,3,450.0,2023-01-05
-119,Triple Room,2,300.0,2023-03-14
-119,Triple Room - with WiFi,1,310.0,2023-05-30
-119,Triple Room - with Breakfast,2,320.0,2023-07-17
-123,Single Room,1,100.0,2023-01-15
-123,Single Room - with WiFi,2,110.0,2023-03-05
-123,Single Room - with WiFi - with Breakfast,3,130.0,2023-05-19
-123,Single Room - with Breakfast,2,120.0,2023-08-09
-124,Double Room - with WiFi,2,250.0,2023-02-01
-124,Double Room,1,200.0,2023-04-17
-124,Double Room - with Breakfast,3,220.0,2023-06-23
-124,Double Room - with WiFi - with Breakfast,2,270.0,2023-09-30
-131,Triple Room - with WiFi - with Late Checkout,2,540.0,2023-01-05
-131,Triple Room - with WiFi,3,330.0,2023-02-12
-131,Triple Room - with Late Checkout,1,315.0,2023-04-01
-131,Triple Room,1,300.0,2023-06-19
-135,Single Room,1,100.0,2023-02-07
-135,Single Room - with WiFi,2,110.0,2023-03-29
-135,Single Room - with WiFi - with Breakfast,3,130.0,2023-05-11
-135,Single Room - with Breakfast,2,120.0,2023-07-24
-139,Double Room - with WiFi,2,250.0,2023-01-18
-139,Double Room,1,200.0,2023-03-21
-139,Double Room - with Breakfast,3,220.0,2023-05-03
-139,Double Room - with WiFi - with Breakfast,2,270.0,2023-08-20
-144,Single Room,1,100.0,2023-01-10
-144,Single Room - with WiFi,2,110.0,2023-02-25
-144,Single Room - with WiFi - with Breakfast,3,130.0,2023-04-12
-144,Single Room - with Breakfast,2,120.0,2023-06-16
-148,Double Room - with Breakfast,1,220.0,2023-02-22
-148,Double Room - with WiFi,2,230.0,2023-04-09
-148,Double Room - with WiFi - with Breakfast,3,250.0,2023-06-05
-148,Double Room,1,200.0,2023-07-29
-152,Triple Room,1,300.0,2023-01-25
-152,Triple Room - with WiFi,2,310.0,2023-03-14
-152,Triple Room - with WiFi - with Breakfast,3,330.0,2023-04-19
-152,Triple Room - with Breakfast,2,320.0,2023-06-11
-158,Triple Room - with WiFi - with Breakfast,2,450.0,2023-02-18
-158,Triple Room,1,300.0,2023-04-02
-158,Triple Room - with WiFi,3,310.0,2023-05-26
-158,Triple Room - with Breakfast,2,320.0,2023-07-10
-162,Single Room,1,100.0,2023-03-02
-162,Single Room - with WiFi,2,110.0,2023-04-13
-162,Single Room - with WiFi - with Breakfast,3,130.0,2023-06-28
-162,Single Room - with Breakfast,2,120.0,2023-08-25
-166,Double Room - with Late Checkout,1,220.0,2023-02-15
-166,Double Room - with WiFi,2,230.0,2023-03-25
-166,Double Room,1,200.0,2023-05-08
-166,Double Room - with WiFi - with Breakfast,3,250.0,2023-07-03
-104,Single Room,2,100.0,2024-01-10
-104,Single Room - with WiFi,3,110.0,2024-02-05
-104,Single Room - with WiFi - with Breakfast,4,130.0,2024-03-12
-109,Double Room,1,200.0,2024-01-14
-109,Double Room - with WiFi,2,210.0,2024-03-01
-109,Double Room - with Breakfast,3,220.0,2024-04-21
-113,Triple Room - with WiFi,2,310.0,2024-01-18
-113,Triple Room - with WiFi - with Breakfast,3,330.0,2024-02-20
-119,Triple Room,1,300.0,2024-01-22
-119,Triple Room - with WiFi - with Breakfast,2,450.0,2024-02-28
-123,Single Room - with Breakfast,3,120.0,2024-01-25
-124,Double Room - with WiFi - with Breakfast,1,270.0,2024-01-28
-131,Triple Room - with WiFi,2,310.0,2024-02-14
-135,Single Room - with WiFi - with Breakfast,3,130.0,2024-03-05
-139,Double Room - with WiFi,2,250.0,2024-01-30
-139,Double Room,1,200.0,2024-03-10
-144,Single Room - with WiFi,2,110.0,2024-02-05
-148,Double Room - with WiFi - with Breakfast,3,250.0,2024-03-12
-152,Triple Room - with Breakfast,2,320.0,2024-01-15
-158,Triple Room - with WiFi,3,310.0,2024-02-15
-162,Single Room - with WiFi - with Breakfast,4,130.0,2024-03-07
-166,Double Room - with WiFi - with Breakfast,3,250.0,2024-02-25
-104,Single Room,1,100.0,2024-11-02
-109,Double Room - with WiFi - with Breakfast,2,270.0,2024-11-05
-113,Triple Room - with WiFi,3,310.0,2024-11-12
-119,Triple Room - with WiFi - with Breakfast,2,450.0,2024-11-18
-124,Double Room - with WiFi - with Breakfast,1,270.0,2024-11-20
-104,Single Room,1,100.0,2024-12-17
-109,Double Room - with WiFi - with Breakfast,2,400.0,2024-12-17
-113,Triple Room,1,300.0,2024-12-17
-117,Single Room - with WiFi - with Breakfast,2,220.0,2024-12-17
-119,Triple Room - with WiFi - with Breakfast,3,450.0,2024-12-17
-123,Single Room,1,100.0,2024-12-17
-124,Double Room - with WiFi,1,250.0,2024-12-17
-131,Triple Room - with WiFi - with Late Checkout,2,540.0,2024-12-17
-135,Single Room,1,100.0,2024-12-17
-139,Double Room - with WiFi,2,250.0,2024-12-17
-144,Single Room,1,100.0,2024-12-17
-148,Double Room - with Breakfast,1,250.0,2024-12-17
-152,Triple Room,1,300.0,2024-12-17
-158,Triple Room - with WiFi - with Breakfast,2,450.0,2024-12-17
-162,Single Room,1,100.0,2024-12-17
-166,Double Room - with Late Checkout,1,220.0,2024-12-17
 101,faris@gmail.com,Single Room - with WiFi - with Breakfast,2,260.0,2024-12-19
 102,faris2@gmail.com,Double Room - with WiFi - with Breakfast,1,230.0,2024-12-19
+103,faris@gmail.com,Triple Room - with WiFi - with Breakfast,1,330.0,2024-12-19
+104,alex@gmail.com,Single Room - with WiFi - with Sea View,3,390.0,2024-12-20
+105,emily@gmail.com,Double Room - with WiFi - with Pool View,2,400.0,2024-12-20
+106,john@gmail.com,Triple Room - with WiFi - with Breakfast,4,520.0,2024-12-21
+107,maria@gmail.com,Single Room - with WiFi - with Breakfast,1,130.0,2024-12-22
+108,olivia@gmail.com,Double Room - with WiFi - with Garden View,3,690.0,2024-12-22
+109,david@gmail.com,Triple Room - with WiFi - with Breakfast,2,450.0,2024-12-23
+110,sarah@gmail.com,Single Room - with WiFi - with City View,5,650.0,2024-12-23
+111,jason@gmail.com,Double Room - with WiFi - with Breakfast,1,230.0,2024-12-24
+112,laura@gmail.com,Triple Room - with WiFi - with Sea View,2,380.0,2024-12-24
+113,harry@gmail.com,Single Room - with WiFi - with Breakfast,3,390.0,2024-12-25
+114,george@gmail.com,Double Room - with WiFi - with Pool View,4,520.0,2024-12-25
+115,lily@gmail.com,Triple Room - with WiFi - with Breakfast,1,330.0,2024-12-26
+116,peter@gmail.com,Single Room - with WiFi - with Sea View,2,340.0,2024-12-26
+117,anna@gmail.com,Double Room - with WiFi - with Garden View,3,450.0,2024-12-27
+118,michael@gmail.com,Triple Room - with WiFi - with Breakfast,2,480.0,2024-12-27
+119,julia@gmail.com,Single Room - with WiFi - with Breakfast,4,520.0,2024-12-28
+120,daniel@gmail.com,Double Room - with WiFi - with Pool View,3,510.0,2024-12-28

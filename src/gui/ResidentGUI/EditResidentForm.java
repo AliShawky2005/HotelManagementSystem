@@ -13,6 +13,8 @@ public class EditResidentForm {
     private JTextField emailField;
     private JTextField contactField;
 
+    private JTextField roomNumberField;
+
     public EditResidentForm() {
         // Frame Setup
         frame = new JFrame("Edit Resident");
@@ -66,6 +68,14 @@ public class EditResidentForm {
         contactField = new JTextField(20);
         inputPanel.add(contactField, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        inputPanel.add(new JLabel("New Room Number:"), gbc);
+
+        gbc.gridx = 1;
+        roomNumberField = new JTextField(20);
+        inputPanel.add(roomNumberField, gbc);
+
         // Buttons Panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
@@ -86,6 +96,7 @@ public class EditResidentForm {
                 nameField.setText(resident.getResidentName());
                 newEmailField.setText(resident.getEmail());
                 contactField.setText(String.valueOf(resident.getContactInfo()));
+                roomNumberField.setText(String.valueOf(resident.getRoomNumber()));
             } else {
                 JOptionPane.showMessageDialog(frame, "Resident not found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -97,6 +108,7 @@ public class EditResidentForm {
             String newName = nameField.getText().trim();
             String newEmail = newEmailField.getText().trim();
             String contactText = contactField.getText().trim();
+            int roomNumber = Integer.parseInt(roomNumberField.getText());
 
             // Validate input fields
             if (oldEmail.isEmpty() || newName.isEmpty() || newEmail.isEmpty() || contactText.isEmpty()) {
@@ -107,7 +119,7 @@ public class EditResidentForm {
             try {
                 int newContact = Integer.parseInt(contactText);
 
-                Resident updatedResident = new Resident(newName, newEmail, newContact);
+                Resident updatedResident = new Resident(newName, newEmail, newContact,roomNumber);
                 boolean isUpdated = ResidentController.getInstance().updateResident(oldEmail, updatedResident);
 
                 if (isUpdated) {

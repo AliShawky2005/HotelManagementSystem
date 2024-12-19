@@ -217,20 +217,19 @@ public class RoomAssignmentForm {
 
 
                 // Create a new Resident object
-                Resident resident = new Resident(residentName, residentEmail, residentPhone);
 
-                // Add resident and proceed with room assignment if successful
-                boolean added = ResidentController.getInstance().addResident(resident);
-                if (!added) {
-                    JOptionPane.showMessageDialog(frame, "Failed to add resident. Email already in use.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
 
                 // Get selected room and night details
                 int selectedRoomNumber = Integer.parseInt((String) roomNumberComboBox.getSelectedItem());
                 int nights = Integer.parseInt(nightsField.getText().trim());
                 String roomType = roomDescriptionLabel.getText().split(" ")[0]; // Assuming room type is the first word in the description
 
+                Resident resident = new Resident(residentName, residentEmail, residentPhone, selectedRoomNumber);
+                boolean added = ResidentController.getInstance().addResident(resident);
+                if (!added) {
+                    JOptionPane.showMessageDialog(frame, "Failed to add resident. Email already in use.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 // Create the room
                 Room room = RoomFactory.createRoom(selectedRoomNumber, roomType, nights, residentEmail);
 

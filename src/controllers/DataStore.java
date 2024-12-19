@@ -131,11 +131,12 @@ public class DataStore {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 3) {
+                if (parts.length == 4) {
                     String name = parts[0];
                     String email = parts[1];
                     int contactInfo = Integer.parseInt(parts[2]);
-                    Resident resident = new Resident(name,email,contactInfo);
+                    int roomNumber = Integer.parseInt(parts[3]);
+                    Resident resident = new Resident(name,email,contactInfo,roomNumber);
                     residents.add(resident);
                 }
             }
@@ -151,7 +152,8 @@ public class DataStore {
             for (Resident resident : residents) {
                 writer.write(resident.getResidentName() + "," +
                         resident.getEmail() + "," +
-                        resident.getContactInfo());
+                        resident.getContactInfo() + "," +
+                        resident.getRoomNumber());
                 writer.newLine();
             }
         } catch (IOException e) {

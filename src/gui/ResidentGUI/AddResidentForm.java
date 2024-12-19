@@ -9,7 +9,7 @@ import java.awt.*;
 public class AddResidentForm {
 
     private JFrame frame;
-    private JTextField nameField, emailField, contactField;
+    private JTextField nameField, emailField, contactField, roomNumberField;
 
     public AddResidentForm() {
         // Frame setup
@@ -48,6 +48,12 @@ public class AddResidentForm {
         gbc.gridx = 1;
         inputPanel.add(contactField, gbc);
 
+        gbc.gridx = 0; gbc.gridy = 3;
+        inputPanel.add(new JLabel("Room Number:"), gbc);
+        roomNumberField = new JTextField(20);
+        gbc.gridx = 1;
+        inputPanel.add(roomNumberField, gbc);
+
         frame.add(inputPanel, BorderLayout.CENTER);
 
         // Button panel for Add and Back buttons
@@ -73,6 +79,7 @@ public class AddResidentForm {
                 String name = nameField.getText().trim();
                 String email = emailField.getText().trim();
                 String contactText = contactField.getText().trim();
+                int roomNumber = Integer.parseInt(roomNumberField.getText());
 
                 if (name.isEmpty() || email.isEmpty() || contactText.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -95,7 +102,7 @@ public class AddResidentForm {
                 }
 
                 // Add Resident
-                Resident newResident = new Resident(name, email, contactInfo);
+                Resident newResident = new Resident(name, email, contactInfo,roomNumber);
                 boolean added = ResidentController.getInstance().addResident(newResident);
 
                 if (added) {

@@ -21,8 +21,8 @@ public class IncomeTracker {
 
                 if (parts.length >= 5) {
                     // Extract the reservation date and total cost
-                    LocalDate reservationDate = LocalDate.parse(parts[4], DateTimeFormatter.ISO_DATE);
-                    double totalCost = Double.parseDouble(parts[3]);
+                    LocalDate reservationDate = LocalDate.parse(parts[5], DateTimeFormatter.ISO_DATE);
+                    double totalCost = Double.parseDouble(parts[4]);
 
                     // Check if the reservation date is within the specified range
                     if ((reservationDate.isEqual(startDate) || reservationDate.isAfter(startDate)) &&
@@ -47,7 +47,7 @@ public class IncomeTracker {
                 String[] parts = line.split(",");
 
                 if (parts.length >= 5) {
-                    LocalDate reservationDate = LocalDate.parse(parts[4], DateTimeFormatter.ISO_DATE);
+                    LocalDate reservationDate = LocalDate.parse(parts[5], DateTimeFormatter.ISO_DATE);
 
                     // Check if the reservation date is within the range
                     if ((reservationDate.isEqual(startDate) || reservationDate.isAfter(startDate)) &&

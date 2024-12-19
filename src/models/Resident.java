@@ -7,10 +7,14 @@ public class Resident {
     private String email;
     private int contactInfo;
 
-    public Resident(String residentName, String email, int contactInfo) {
+
+    private int roomNumber;
+
+    public Resident(String residentName, String email, int contactInfo, int roomNumber) {
         this.residentName = residentName;
         this.email = email;
         this.contactInfo = contactInfo;
+        this.roomNumber = roomNumber;
     }
 
     public String getResidentName() {
@@ -26,6 +30,9 @@ public class Resident {
         return contactInfo;
     }
 
+    public int getRoomNumber() {
+        return roomNumber;
+    }
 
 
 
