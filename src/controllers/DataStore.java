@@ -15,9 +15,7 @@ import java.util.List;
 public class DataStore {
     private static final String USERS_FILE = "users.txt";
     private static final String WORKERS_FILE = "workers.txt";
-
     private static final String RESIDENTS_FILE = "residents.txt";
-
 
     private static final String ROOMS_FILE = "rooms.txt";
     private static HashMap<String, User> users = new HashMap<>();
@@ -133,7 +131,7 @@ public class DataStore {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 4) {
+                if (parts.length == 3) {
                     String name = parts[0];
                     String email = parts[1];
                     int contactInfo = Integer.parseInt(parts[2]);
@@ -149,7 +147,7 @@ public class DataStore {
     }
 
     public static void saveResidents(List<Resident> residents) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(WORKERS_FILE))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESIDENTS_FILE))) {
             for (Resident resident : residents) {
                 writer.write(resident.getResidentName() + "," +
                         resident.getEmail() + "," +
@@ -161,13 +159,6 @@ public class DataStore {
         }
     }
 
-    public static boolean isNewResident(String name, String email) {
-        for (ResidentController resident : residents) {
-            if (resident.residentName.equalsIgnoreCase(name) || resident.email.equalsIgnoreCase(email)) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 
 }

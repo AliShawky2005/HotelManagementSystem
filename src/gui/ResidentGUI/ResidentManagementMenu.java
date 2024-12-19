@@ -14,13 +14,13 @@ public class ResidentManagementMenu {
         frame.setLayout(new GridLayout(4, 1, 10, 10));
 
         JButton addResidentButton = new JButton("Add Resident");
-        //addResidentButton.addActionListener(e -> addResidentUI());
+        addResidentButton.addActionListener(e -> new AddResidentForm());
 
         JButton deleteResidentButton = new JButton("Delete Resident");
-        //deleteResidentButton.addActionListener(e -> deleteResidentUI());
+        deleteResidentButton.addActionListener(e -> new DeleteResidentForm());
 
         JButton editResidentButton = new JButton("Edit Resident");
-        //editResidentButton.addActionListener(e -> editResidentUI());
+        editResidentButton.addActionListener(e -> new EditResidentForm());
 
         frame.add(addResidentButton);
         frame.add(deleteResidentButton);

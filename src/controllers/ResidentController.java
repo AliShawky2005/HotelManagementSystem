@@ -13,6 +13,7 @@ import java.io.*;
 
 public class ResidentController {
 
+    private static ResidentController instance;
 
     private static List<Resident> residents = DataStore.loadResidentsFromFile();
 
@@ -21,14 +22,37 @@ public class ResidentController {
     }
 
 
+    public static ResidentController getInstance() {
+        if (instance == null) {
+            instance = new ResidentController();
+        }
+        return instance;
+    }
+
+
     public boolean addResident(Resident resident) {
-        if (!DataStore.isNewResident(resident.getResidentName(), resident.getEmail())) {
+        if (!isNewResident(resident.getResidentName(), resident.getEmail(),residents)) {
             return false;
         }
         residents.add(resident);
         DataStore.saveResidents(residents);
         return true;
     }
+
+    public boolean validateEmail(String email) {
+        String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.matches(emailRegex, email);
+    }
+
+    private static boolean isNewResident(String name, String email,List<Resident> residents) {
+        for (Resident resident : residents) {
+            if (resident.getResidentName().equalsIgnoreCase(name) || resident.getEmail().equalsIgnoreCase(email)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public Resident findResidentByEmail(String email) {
 

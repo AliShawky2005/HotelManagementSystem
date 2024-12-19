@@ -1,6 +1,7 @@
 package gui.ResidentGUI;
 
-import gui.ResidentMenuUI;
+import controllers.ResidentController;
+import models.Resident;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,64 +9,113 @@ import java.awt.*;
 public class AddResidentForm {
 
     private JFrame frame;
-    private JTextField nameField;
-    private JTextField emailField;
-    private JTextField contactField;
-    public AddResidentForm()
-    {
-        frame = new JFrame("Resident Management System");
+    private JTextField nameField, emailField, contactField;
+
+    public AddResidentForm() {
+        // Frame setup
+        frame = new JFrame("Add Resident");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 600);
-        frame.setLayout(new BorderLayout());
+        frame.setSize(400, 350);
+        frame.setLocationRelativeTo(null); // Center the frame
+        frame.setLayout(new BorderLayout(20, 20));
 
-        JPanel inputPanel = new JPanel(new GridLayout(5, 3, 10, 10));
-        inputPanel.setBorder(BorderFactory.createTitledBorder("Resident Details"));
+        // Input panel for resident details with titled border
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+        inputPanel.setBorder(BorderFactory.createTitledBorder("Enter Resident Information"));
 
-        inputPanel.add(new JLabel("Name:"));
-        nameField = new JTextField();
-        inputPanel.add(nameField);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Spacing around components
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        inputPanel.add(new JLabel("Email:"));
-        emailField = new JTextField();
-        inputPanel.add(emailField);
+        // Name input
+        gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
+        inputPanel.add(new JLabel("Name:"), gbc);
+        nameField = new JTextField(20);
+        gbc.gridx = 1;
+        inputPanel.add(nameField, gbc);
 
-        inputPanel.add(new JLabel("Contact Info:"));
-        contactField = new JTextField();
-        inputPanel.add(contactField);
+        // Email input
+        gbc.gridx = 0; gbc.gridy = 1;
+        inputPanel.add(new JLabel("Email:"), gbc);
+        emailField = new JTextField(20);
+        gbc.gridx = 1;
+        inputPanel.add(emailField, gbc);
 
-        JButton calculateButton = new JButton("Add Service");
-        calculateButton.addActionListener(new ResidentMenuUI.CalculateCostListener());
-        inputPanel.add(calculateButton);
+        // Contact info input
+        gbc.gridx = 0; gbc.gridy = 2;
+        inputPanel.add(new JLabel("Contact Info:"), gbc);
+        contactField = new JTextField(20);
+        gbc.gridx = 1;
+        inputPanel.add(contactField, gbc);
 
-        calculateButton = new JButton("remove Service");
-        calculateButton.addActionListener(new ResidentMenuUI.ManagerCostListener());
-        inputPanel.add(calculateButton);
+        frame.add(inputPanel, BorderLayout.CENTER);
+
+        // Button panel for Add and Back buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        buttonPanel.setOpaque(false);
 
         JButton addButton = new JButton("Add Resident");
-        addButton.addActionListener(new AddResidentListener());
-        inputPanel.add(addButton);
-
-        frame.add(inputPanel, BorderLayout.NORTH);
-
-        JPanel servicePanel = new JPanel(new BorderLayout());
-        servicePanel.setBorder(BorderFactory.createTitledBorder("Available Services"));
-
-        servicesArea = new JTextArea();
-        servicesArea.setText(controller.getServicesList());
-        servicesArea.setEditable(false);
-        servicePanel.add(new JScrollPane(servicesArea), BorderLayout.CENTER);
-
-        costArea = new JTextArea(5, 40);
-        costArea.setEditable(false);
-        costArea.setBorder(BorderFactory.createTitledBorder("Total Cost"));
-        servicePanel.add(new JScrollPane(costArea), BorderLayout.SOUTH);
-
-        frame.add(servicePanel, BorderLayout.CENTER);
+        addButton.setPreferredSize(new Dimension(150, 40)); // Set button size
+        addButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        buttonPanel.add(addButton);
 
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> setupMainMenu());
-        frame.add(backButton, BorderLayout.SOUTH);
+        backButton.setPreferredSize(new Dimension(150, 40)); // Set button size
+        backButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        buttonPanel.add(backButton);
 
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Button Listeners
+        addButton.addActionListener(e -> {
+            try {
+                // Validate input fields
+                String name = nameField.getText().trim();
+                String email = emailField.getText().trim();
+                String contactText = contactField.getText().trim();
+
+                if (name.isEmpty() || email.isEmpty() || contactText.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Validate Email Format
+                if (!ResidentController.getInstance().validateEmail(email)) {
+                    JOptionPane.showMessageDialog(frame, "Invalid Email Format.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Validate Contact Info as number
+                int contactInfo;
+                try {
+                    contactInfo = Integer.parseInt(contactText);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Contact Info must be a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Add Resident
+                Resident newResident = new Resident(name, email, contactInfo);
+                boolean added = ResidentController.getInstance().addResident(newResident);
+
+                if (added) {
+                    JOptionPane.showMessageDialog(frame, "Resident added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Resident with this name or email already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "An unexpected error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        backButton.addActionListener(e -> frame.dispose());
+
+        // Focus management: Automatically focus on the first field
+        nameField.requestFocus();
+
+        // Display the frame
         frame.setVisible(true);
     }
+
 }
