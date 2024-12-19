@@ -254,7 +254,7 @@ public class RoomAssignmentForm {
 
                 // Show the reservation details in the result area
                 resultArea.setText("Room " + selectedRoomNumber + " Assigned Successfully" + " for "
-                + residentName + "\n");
+                + residentName + "!\n");
                 resultArea.append(("Resident Email: ") + residentEmail + "\n");
                 resultArea.append("Room Description: " + room.getDescription() + "\n");
                 resultArea.append("Price Per Night: $" + room.getPrice() + "\n");
