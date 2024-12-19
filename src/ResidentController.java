@@ -398,7 +398,7 @@ class ResidentMenuUI {
         inputPanel.add(nameField);
 
         inputPanel.add(new JLabel("Old Email:"));
-        String email= String.valueOf(OldEmailField = new JTextField());
+        OldEmailField = new JTextField();
         inputPanel.add(OldEmailField);
 
         inputPanel.add(new JLabel("New Email:"));
