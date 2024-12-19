@@ -1,20 +1,24 @@
 package gui;
 
 import models.IncomeTracker;
-import controllers.DataStore;
+import models.WeeklyIncomeCalculationStrategy;
+import models.MonthlyIncomeCalculationStrategy;
+import models.YearlyIncomeCalculationStrategy;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class IncomeTrackerForm {
-
     private JFrame frame;
     private JTextArea reportArea;
     private JButton weeklyButton, monthlyButton, yearlyButton, customButton, backButton;
     private JTextField startDateField, endDateField;
+    private IncomeTracker incomeTracker;
 
     public IncomeTrackerForm() {
+        incomeTracker = new IncomeTracker(new WeeklyIncomeCalculationStrategy()); // Default strategy
         initializeUI();
     }
 
@@ -37,16 +41,17 @@ public class IncomeTrackerForm {
         JScrollPane scrollPane = new JScrollPane(reportArea);
         frame.add(scrollPane, BorderLayout.CENTER);
 
-        // Bottom Panel: Custom Date Range Input and Back Button
+        // Bottom Panel: Custom Date Range Input
         JPanel customRangePanel = createCustomRangePanel();
         frame.add(customRangePanel, BorderLayout.SOUTH);
 
-        // Back Button
-        JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        // Left Panel: Back Button
+        JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             frame.dispose(); // Close the current form
-            new ManagerDashboard(DataStore.loggedInUser); // Go back to Manager Dashboard
+            // Replace the following with navigation to the previous screen
+            System.out.println("Back button pressed!");
         });
         backPanel.add(backButton);
         frame.add(backPanel, BorderLayout.WEST);
@@ -97,7 +102,7 @@ public class IncomeTrackerForm {
         LocalDate startDate = null;
         LocalDate endDate = LocalDate.now();
 
-        // Set date ranges based on period
+        // Set date ranges based on the period
         switch (period) {
             case "weekly":
                 startDate = endDate.minusDays(7);
@@ -123,26 +128,34 @@ public class IncomeTrackerForm {
         }
     }
 
+
     private void showCustomDateRangeReport() {
         try {
             LocalDate startDate = LocalDate.parse(startDateField.getText());
             LocalDate endDate = LocalDate.parse(endDateField.getText());
 
-            double totalIncome = IncomeTracker.calculateIncomeByDateRange(startDate, endDate);
-            reportArea.setText("=== CUSTOM DATE RANGE REPORT ===\n");
-            reportArea.append("From: " + startDate + " To: " + endDate + "\n");
-            reportArea.append("Total Income: $" + totalIncome + "\n\n");
+            if (startDate.isAfter(endDate)) {
+                throw new IllegalArgumentException("Start date cannot be after end date.");
+            }
 
-            // Detailed report
-            reportArea.append("Detailed Report:\n");
-            reportArea.append("-------------------------------------------\n");
+            double totalIncome = incomeTracker.calculateIncomeByDateRange(startDate, endDate);
+            updateReportArea(startDate, endDate, totalIncome);
             IncomeTracker.generateIncomeReportForPeriod(reportArea, startDate, endDate);
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(frame, "Invalid date format. Use YYYY-MM-DD.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(IncomeTrackerForm::new);
-//    }
+    private void updateReportArea(LocalDate startDate, LocalDate endDate, double totalIncome) {
+        SwingUtilities.invokeLater(() -> {
+            reportArea.setText("=== CUSTOM DATE RANGE REPORT ===\n");
+            reportArea.append("From: " + startDate + " To: " + endDate + "\n");
+            reportArea.append("Total Income: $" + totalIncome + "\n\n");
+            reportArea.append("Detailed Report:\n");
+            reportArea.append("-------------------------------------------\n");
+            reportArea.repaint();
+        });
+    }
 }
