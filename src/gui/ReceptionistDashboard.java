@@ -25,13 +25,13 @@ public class ReceptionistDashboard extends JFrame {
         centerPanel.setLayout(new GridLayout(3, 2, 10, 10));
 
         JButton manageResidentsButton = new JButton("Manage Residents");
-        //JButton calculateCostsButton = new JButton("Calculate Costs");
+        JButton residentCheckoutButton = new JButton("Resident Checkout");
         JButton assignRoomsButton = new JButton("Assign Rooms");
         JButton logoutButton = new JButton("Logout");
 
         // Add buttons to panel
         centerPanel.add(manageResidentsButton);
-       // centerPanel.add(calculateCostsButton);
+        centerPanel.add(residentCheckoutButton);
         centerPanel.add(assignRoomsButton);
         centerPanel.add(logoutButton);
 
@@ -44,8 +44,15 @@ public class ReceptionistDashboard extends JFrame {
         });
 
         // Placeholder Actions
-        manageResidentsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Manage Residents clicked!"));
-        //calculateCostsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Calculate Costs clicked!"));
+        manageResidentsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+              //  new ResidentMenuUI();
+            }
+        });
+
+        residentCheckoutButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Calculate Costs clicked!"));
         assignRoomsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
