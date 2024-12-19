@@ -10,6 +10,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static controllers.RoomStatus.*;
+
 public class RoomAssignmentForm {
     private JFrame frame;
     private JComboBox<String> roomNumberComboBox;
@@ -22,14 +24,12 @@ public class RoomAssignmentForm {
     private JTextArea resultArea;
     private JButton backButton;
 
-    private List<RoomInfo> availableRooms;
 
     private JTextField nameField;
     private JTextField emailField;
     private JTextField phoneField;
 
     public RoomAssignmentForm() {
-        availableRooms = DataStore.loadRoomDataFromFile();
         initializeUI();
     }
 
@@ -104,7 +104,7 @@ public class RoomAssignmentForm {
 
         gbc.gridx = 1;
         roomNumberComboBox = new JComboBox<>();
-        populateRoomComboBox();
+        populateRoomComboBox(roomNumberComboBox);
         roomNumberComboBox.addActionListener(e -> updateRoomDescription());
         panel.add(roomNumberComboBox, gbc);
 
@@ -158,14 +158,7 @@ public class RoomAssignmentForm {
     }
 
     // Populate the room number combo box
-    private void populateRoomComboBox() {
-        roomNumberComboBox.removeAllItems();
-        for (RoomInfo room : availableRooms) {
-            if (room.isAvailable()) {
-                roomNumberComboBox.addItem(String.valueOf(room.getRoomNumber()));
-            }
-        }
-    }
+
 
     // Update room description when a room is selected
     private void updateRoomDescription() {
@@ -181,23 +174,6 @@ public class RoomAssignmentForm {
     }
 
 
-
-    // Save reservation to file
-    private void saveReservation(Room room) {
-        RoomFactory.saveRoomToFile(room);
-    }
-
-    // Update rooms.txt file after marking a room as unavailable
-    private void updateRoomsFile(String fileName) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (RoomInfo room : availableRooms) {
-                writer.write(room.getRoomNumber() + "," + room.getDescription() + "," + room.isAvailable());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error updating room file: " + e.getMessage());
-        }
-    }
 
     // Listener for the "Assign Room" button
     private class AssignRoomListener implements ActionListener {
@@ -242,14 +218,9 @@ public class RoomAssignmentForm {
                 saveReservation(room);
 
                 // Mark the room as unavailable
-                for (RoomInfo r : availableRooms) {
-                    if (r.getRoomNumber() == selectedRoomNumber) {
-                        r.setAvailable(false);
-                        break;
-                    }
-                }
+                changeRoomStatus(selectedRoomNumber);
                 updateRoomsFile("rooms.txt");
-                populateRoomComboBox();
+                populateRoomComboBox(roomNumberComboBox);
 
                 // Show the reservation details in the result area
                 resultArea.setText("Room " + selectedRoomNumber + " Assigned Successfully" + " for "

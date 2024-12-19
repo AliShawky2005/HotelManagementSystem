@@ -2,6 +2,7 @@ package gui.ResidentGUI;
 
 import controllers.DataStore;
 import controllers.ResidentController;
+import controllers.RoomStatus;
 import gui.RoomAssignmentForm;
 import models.Resident;
 import models.Room;
@@ -9,17 +10,17 @@ import models.RoomFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
+
+import static controllers.RoomStatus.*;
+import static controllers.RoomStatus.availableRooms;
 
 public class AddResidentForm {
 
     private JFrame frame;
     private JTextField nameField, emailField, contactField;
 
-    private JComboBox roomNumberField;
+    private JComboBox roomNumberComboBox;
     private List<RoomAssignmentForm.RoomInfo> availableRooms;
 
     public AddResidentForm() {
@@ -64,15 +65,15 @@ public class AddResidentForm {
 
         inputPanel.add(new JLabel("Select Room Number:"), gbc);
         gbc.gridx = 1;
-        roomNumberField = new JComboBox<>();
-        populateRoomComboBox();
+        roomNumberComboBox = new JComboBox<>();
+        populateRoomComboBox(roomNumberComboBox);
 
 
-        inputPanel.add(roomNumberField, gbc);
+        inputPanel.add(roomNumberComboBox, gbc);
 
 
         gbc.gridx = 1;
-        inputPanel.add(roomNumberField, gbc);
+        inputPanel.add(roomNumberComboBox, gbc);
 
         frame.add(inputPanel, BorderLayout.CENTER);
 
@@ -99,7 +100,7 @@ public class AddResidentForm {
                 String name = nameField.getText().trim();
                 String email = emailField.getText().trim();
                 String contactText = contactField.getText().trim();
-                int roomNumber = Integer.parseInt((String) roomNumberField.getSelectedItem());
+                int roomNumber = Integer.parseInt((String) roomNumberComboBox.getSelectedItem());
 
                 if (name.isEmpty() || email.isEmpty() || contactText.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -131,11 +132,17 @@ public class AddResidentForm {
                 } else {
                     JOptionPane.showMessageDialog(frame, "Resident with this email already exists.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+
+                String roomType = RoomStatus.getRoomDescription(roomNumber);
+                roomType = roomType.split(" ")[0];
                 // Save the reservation to the file
-                //saveReservation(room);
+                Room room = RoomFactory.createRoom(roomNumber,roomType,1, email);
+                saveReservation(room);
+
+                changeRoomStatus(roomNumber);
 
                 updateRoomsFile("rooms.txt");
-                populateRoomComboBox();
+                populateRoomComboBox(roomNumberComboBox);
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(frame, "An unexpected error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -154,32 +161,6 @@ public class AddResidentForm {
 
 
 
-    // Populate the room number combo box
-    private void populateRoomComboBox() {
-        roomNumberField.removeAllItems();
-        for (RoomAssignmentForm.RoomInfo room : availableRooms) {
-            if (room.isAvailable()) {
-                roomNumberField.addItem(String.valueOf(room.getRoomNumber()));
-            }
-        }
-    }
-
-    // Save reservation to file
-    private void saveReservation(Room room) {
-        RoomFactory.saveRoomToFile(room);
-    }
-
-    // Update rooms.txt file after marking a room as unavailable
-    private void updateRoomsFile(String fileName) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (RoomAssignmentForm.RoomInfo room : availableRooms) {
-                writer.write(room.getRoomNumber() + "," + room.getDescription() + "," + room.isAvailable());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error updating room file: " + e.getMessage());
-        }
-    }
 
 }
 
