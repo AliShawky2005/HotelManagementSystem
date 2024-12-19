@@ -52,8 +52,8 @@ public class IncomeTracker {
                     // Check if the reservation date is within the range
                     if ((reservationDate.isEqual(startDate) || reservationDate.isAfter(startDate)) &&
                             (reservationDate.isEqual(endDate) || reservationDate.isBefore(endDate))) {
-                        reportArea.append(String.format("Room: %s | Description: %s | Nights: %s | Total: $%s | Date: %s\n",
-                                parts[0], parts[1], parts[2], parts[3], parts[4]));
+                        reportArea.append(String.format("Room: %s | Email: %s | Description: %s | Nights: %s | Total: $%s | Date: %s\n",
+                                parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]));
                     }
                 }
             }
