@@ -1,0 +1,420 @@
+@startuml
+class models.IncomeTracker {
+- {static} String RESERVATIONS_FILE
+- {static} IncomeCalculationStrategy incomeCalculationStrategy
++ <<Create>> IncomeTracker(IncomeCalculationStrategy)
++ void setIncomeCalculationStrategy(IncomeCalculationStrategy)
++ {static} double calculateIncomeByDateRange(LocalDate,LocalDate)
++ {static} void generateIncomeReportForPeriod(JTextArea,LocalDate,LocalDate)
+}
+
+
+class gui.ReceptionistDashboard {
++ <<Create>> ReceptionistDashboard(User)
+}
+
+class gui.WorkerGUI.UpdateWorkerForm {
+- JFrame frame
+- JTextField searchField
++ <<Create>> UpdateWorkerForm()
+}
+
+
+class models.Strategy.MonthlyIncomeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class models.Strategy.CustomDateRangeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class models.ReservationInfo {
+- int roomNumber
+- String residentEmail
+- String description
+- int numberOfNights
+- double totalPrice
+- String reservationDate
++ <<Create>> ReservationInfo(int,String,String,int,double,String)
++ int getRoomNumber()
++ String getResidentEmail()
++ String getDescription()
++ int getNumberOfNights()
++ double getTotalPrice()
++ String getReservationDate()
+}
+
+
+abstract class models.Decorators.RoomDecorator {
+# Room decoratedRoom
++ <<Create>> RoomDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+class models.Resident {
+- String residentName
+- String email
+- int contactInfo
+- int roomNumber
++ <<Create>> Resident(String,String,int,int)
++ String getResidentName()
++ String getEmail()
++ int getContactInfo()
++ int getRoomNumber()
+}
+
+
+class models.Decorators.BreakfastDecorator {
+- {static} double BREAKFAST_COST
++ <<Create>> BreakfastDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+class gui.RoomsDetailsForm {
++ void showDetails()
+}
+
+class gui.ResidentCheckoutForm {
+- JTextField emailField
+- JLabel roomNumberLabel
+- JLabel roomDescriptionLabel
+- JLabel numberOfNightsLabel
+- JLabel reservationDateLabel
+- JLabel totalCostLabel
+- JButton checkoutButton
+- JButton backButton
++ <<Create>> ResidentCheckoutForm()
+- void resetForm()
+}
+
+
+class gui.ResidentGUI.AddResidentForm {
+- JFrame frame
+- JTextField nameField
+- JComboBox roomNumberComboBox
+- List<RoomAssignmentForm.RoomInfo> availableRooms
++ <<Create>> AddResidentForm()
+}
+
+
+class gui.LoginForm {
+- JTextField usernameField
+- JPasswordField passwordField
++ <<Create>> LoginForm()
+}
+
+
+class models.RoomFactory {
++ {static} Room createRoom(int,String,int,String)
++ {static} void saveReservationToFile(Room)
+}
+
+class gui.ResidentGUI.ResidentDetailsForm {
++ <<Create>> ResidentDetailsForm()
+}
+
+class gui.RegistrationForm {
+- JTextField usernameField
+- JPasswordField passwordField
+- JComboBox<String> roleComboBox
++ <<Create>> RegistrationForm()
+}
+
+
+class gui.RoomAssignmentForm {
+- JFrame frame
+- JComboBox<String> roomNumberComboBox
+- JLabel roomDescriptionLabel
+- JTextField nightsField
+- JCheckBox wifiCheckBox
+- JCheckBox breakfastCheckBox
+- JCheckBox lateCheckoutCheckBox
+- JButton assignRoomButton
+- JTextArea resultArea
+- JButton backButton
+- JButton clearButton
+- JTextField nameField
+- JTextField emailField
+- JTextField phoneField
++ <<Create>> RoomAssignmentForm()
+- void initializeUI()
+- JPanel createInputPanel()
+- JPanel createResultPanel()
+- void populateRoomComboBox(JComboBox<String>)
+- void updateRoomDescription()
+- void clearForm()
+}
+
+
+class gui.RoomAssignmentForm$AssignRoomListener {
++ void actionPerformed(ActionEvent)
+}
+
+class gui.RoomAssignmentForm$RoomInfo {
+- int roomNumber
+- String description
+- boolean available
++ <<Create>> RoomInfo(int,String,boolean)
++ int getRoomNumber()
++ String getDescription()
++ boolean isAvailable()
++ void setAvailable(boolean)
+}
+
+
+class gui.WorkerGUI.AddWorkerForm {
+- JFrame frame
+- JTextField nameField
++ <<Create>> AddWorkerForm()
+}
+
+
+class models.Decorators.WiFiDecorator {
+- {static} double WIFI_COST
++ <<Create>> WiFiDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+class gui.WorkerGUI.DeleteWorkerForm {
+- JFrame frame
+- JTextField nameField
++ <<Create>> DeleteWorkerForm()
+}
+
+
+class controllers.WorkerController {
+- {static} WorkerController instance
+- ArrayList<Worker> workers
++ {static} WorkerController getInstance()
++ ArrayList<Worker> getWorkers()
++ void addWorker(Worker)
++ boolean updateWorker(String,Worker)
++ boolean deleteWorker(String)
+}
+
+
+class models.Decorators.LateCheckoutDecorator {
+- {static} double LATE_CHECKOUT_COST
++ <<Create>> LateCheckoutDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+class gui.WorkerGUI.WorkerManagementMenu {
+- JFrame frame
++ <<Create>> WorkerManagementMenu()
+}
+
+
+interface models.Strategy.IncomeCalculationStrategy {
+~ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class gui.IncomeTrackerForm {
+- JFrame frame
+- JTextArea reportArea
+- JButton weeklyButton
+- JTextField startDateField
+- IncomeTracker incomeTracker
++ <<Create>> IncomeTrackerForm()
+- void initializeUI()
+- JPanel createButtonPanel()
+- JPanel createCustomRangePanel()
+- void showReportForPeriod(String)
+- void showCustomDateRangeReport()
+- void updateReportArea(LocalDate,LocalDate,double)
+}
+
+
+class Main {
++ {static} void main(String[])
+}
+
+class models.User {
+- String username
+- String password
+- char role
++ <<Create>> User(String,String,char)
++ String getUsername()
++ String getPassword()
++ char getRole()
+}
+
+
+class models.Strategy.YearlyIncomeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class gui.ResidentGUI.DeleteResidentForm {
+- JFrame frame
+- JTextField emailField
++ <<Create>> DeleteResidentForm()
+}
+
+
+class controllers.RoomStatus {
++ {static} List<RoomAssignmentForm.RoomInfo> availableRooms
++ {static} void populateRoomComboBox(JComboBox<String>)
++ {static} void saveReservation(Room)
++ {static} void updateRoomsFile(String)
++ {static} String getRoomDescription(int)
++ {static} void changeRoomStatus(int,boolean)
+}
+
+
+class controllers.ResidentController {
+- {static} ResidentController instance
+- {static} List<Resident> residents
++ List<Resident> getResidents()
++ {static} ResidentController getInstance()
++ boolean addResident(Resident)
++ boolean validateEmail(String)
++ {static} boolean isNewResident(String,List<Resident>)
++ Resident findResidentByEmail(String)
++ boolean deleteResident(String)
++ boolean updateResident(String,Resident)
++ ReservationInfo getResidentReservation(String)
++ void removeResidentReservation(String)
+}
+
+
+class gui.ResidentMenuUI {
+- JFrame frame
+- JTextField nameField
+- JTextField emailField
+- JTextField contactField
+- JTextArea servicesArea
+- JTextArea costArea
+- JTextField OldEmailField
+}
+
+abstract class models.Room {
+# int roomNumber
+# String description
+# String residentEmail
+# int numberOfNights
++ <<Create>> Room(int,int,String)
++ String getResidentEmail()
++ int getRoomNumber()
++ int getNumberOfNights()
++ {abstract}double getPrice()
++ String getDescription()
++ String bookRoom()
++ double calculateTotalPrice()
++ String toFileString()
+}
+
+
+class models.singleRoom {
++ <<Create>> singleRoom(int,int,String)
++ double getPrice()
+}
+
+class models.doubleRoom {
++ <<Create>> doubleRoom(int,int,String)
++ double getPrice()
+}
+
+class models.tripleRoom {
++ <<Create>> tripleRoom(int,int,String)
++ double getPrice()
+}
+
+class gui.WorkerGUI.WorkerDetailsForm {
++ void viewWorkerDetails()
+}
+
+class gui.ResidentGUI.ResidentManagementMenu {
+- JFrame frame
++ <<Create>> ResidentManagementMenu()
+}
+
+
+class gui.ResidentGUI.EditResidentForm {
+- JFrame frame
+- JTextField nameField
+- JTextField emailField
+- JTextField contactField
+- JTextField roomNumberField
++ <<Create>> EditResidentForm()
+}
+
+
+class models.Strategy.WeeklyIncomeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class gui.ManagerDashboard {
++ <<Create>> ManagerDashboard(User)
+}
+
+class models.Worker {
+- String name
+- String phoneNumber
+- double salary
+- String jobTitle
++ <<Create>> Worker(String,String,double,String)
++ String getName()
++ void setName(String)
++ String getPhoneNumber()
++ void setPhoneNumber(String)
++ double getSalary()
++ void setSalary(double)
++ String getJobTitle()
++ void setJobTitle(String)
+}
+
+
+class controllers.DataStore {
+- {static} String USERS_FILE
+- {static} String WORKERS_FILE
+- {static} String RESIDENTS_FILE
+- {static} String PAST_RESERVATIONS_FILE
+- {static} String CURRENT_RESERVATIONS_FILE
+- {static} String ROOMS_FILE
+- {static} HashMap<String,User> users
++ {static} User loggedInUser
++ {static} HashMap<String,User> getUsers()
++ {static} void addUser(String,User)
+- {static} void loadUsersFromFile()
+- {static} void saveUsersToFile()
++ {static} ArrayList<Worker> loadWorkers()
++ {static} List<RoomAssignmentForm.RoomInfo> loadRoomDataFromFile()
++ {static} void saveWorkers(ArrayList<Worker>)
++ {static} List<Resident> loadResidentsFromFile()
++ {static} void saveResidents(List<Resident>)
++ {static} ArrayList<ReservationInfo> loadReservationsFromFile()
++ {static} void saveReservationsToFile(List<ReservationInfo>)
++ {static} void addReservationToPastReservations(ReservationInfo)
+}
+
+
+
+
+gui.JFrame <|-- gui.ReceptionistDashboard
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.MonthlyIncomeCalculationStrategy
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.CustomDateRangeCalculationStrategy
+models.Room <|-- models.Decorators.RoomDecorator
+models.Decorators.RoomDecorator <|-- models.Decorators.BreakfastDecorator
+gui.JFrame <|-- gui.ResidentCheckoutForm
+gui.JFrame <|-- gui.LoginForm
+gui.JFrame <|-- gui.RegistrationForm
+gui.RoomAssignmentForm +.. gui.RoomAssignmentForm$AssignRoomListener
+gui.ActionListener <|.. gui.RoomAssignmentForm$AssignRoomListener
+gui.RoomAssignmentForm +.. gui.RoomAssignmentForm$RoomInfo
+models.Decorators.RoomDecorator <|-- models.Decorators.WiFiDecorator
+models.Decorators.RoomDecorator <|-- models.Decorators.LateCheckoutDecorator
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.YearlyIncomeCalculationStrategy
+models.Room <|-- models.singleRoom
+models.Room <|-- models.doubleRoom
+models.Room <|-- models.tripleRoom
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.WeeklyIncomeCalculationStrategy
+gui.JFrame <|-- gui.ManagerDashboard
+@enduml
