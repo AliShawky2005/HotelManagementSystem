@@ -113,6 +113,7 @@ public class IncomeTrackerForm {
             case "monthly":
                 incomeTracker.setIncomeCalculationStrategy(new MonthlyIncomeCalculationStrategy());
                 startDate = endDate.minusMonths(1);
+
                 break;
             case "yearly":
                 incomeTracker.setIncomeCalculationStrategy(new YearlyIncomeCalculationStrategy());
@@ -120,13 +121,11 @@ public class IncomeTrackerForm {
                 break;
         }
 
-        if (startDate != null) {
+
             double totalIncome = IncomeTracker.calculateIncomeByDateRange(startDate, endDate);
             updateReportArea(startDate, endDate, totalIncome);
             IncomeTracker.generateIncomeReportForPeriod(reportArea, startDate, endDate);
-        } else {
-            JOptionPane.showMessageDialog(frame, "Invalid report period.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+
     }
 
 

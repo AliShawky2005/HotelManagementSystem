@@ -11,6 +11,8 @@ public class MonthlyIncomeCalculationStrategy implements IncomeCalculationStrate
     public double calculateIncome(BufferedReader reader, LocalDate startDate, LocalDate endDate) throws IOException {
         double totalIncome = 0.0;
         String line;
+        startDate = endDate.minusMonths(1);
+
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
             if (parts.length >= 5) {
