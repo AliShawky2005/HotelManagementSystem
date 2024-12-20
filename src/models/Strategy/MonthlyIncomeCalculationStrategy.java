@@ -8,10 +8,11 @@ import java.time.format.DateTimeFormatter;
 
 public class MonthlyIncomeCalculationStrategy implements IncomeCalculationStrategy {
     @Override
-    public double calculateIncome(BufferedReader reader, LocalDate startDate, LocalDate endDate) throws IOException {
+    public double calculateIncome(BufferedReader reader) throws IOException {
         double totalIncome = 0.0;
         String line;
-        startDate = endDate.minusMonths(1);
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusMonths(1);
 
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");

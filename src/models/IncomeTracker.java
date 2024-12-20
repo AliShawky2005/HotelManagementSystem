@@ -24,7 +24,7 @@ public class IncomeTracker {
         double totalIncome = 0.0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(RESERVATIONS_FILE))) {
-            totalIncome = incomeCalculationStrategy.calculateIncome(reader, startDate, endDate);
+            totalIncome = incomeCalculationStrategy.calculateIncome(reader);
         } catch (IOException e) {
             System.out.println("Error calculating income: " + e.getMessage());
         }

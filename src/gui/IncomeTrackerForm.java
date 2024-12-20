@@ -140,8 +140,12 @@ public class IncomeTrackerForm {
                 throw new IllegalArgumentException("Start date cannot be after end date.");
             }
 
+            CustomDateRangeCalculationStrategy strategy = new CustomDateRangeCalculationStrategy();
+            strategy.setStartDate(startDate);
+            strategy.setEndDate(endDate);
+
             // Set a custom date range strategy
-            incomeTracker.setIncomeCalculationStrategy(new CustomDateRangeCalculationStrategy());
+            incomeTracker.setIncomeCalculationStrategy(strategy);
 
             // Calculate income for the specified date range
             double totalIncome = incomeTracker.calculateIncomeByDateRange(startDate, endDate);

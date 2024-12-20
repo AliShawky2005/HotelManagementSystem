@@ -8,12 +8,12 @@ import java.time.format.DateTimeFormatter;
 
 public class YearlyIncomeCalculationStrategy implements IncomeCalculationStrategy {
     @Override
-    public double calculateIncome(BufferedReader reader, LocalDate startDate, LocalDate endDate) throws IOException {
+    public double calculateIncome(BufferedReader reader) throws IOException {
         double totalIncome = 0.0;
         String line;
         // Get the start and end of the year
-        LocalDate startOfYear = startDate.withDayOfYear(1); // First day of the year
-        LocalDate endOfYear = endDate.withDayOfYear(endDate.lengthOfYear()); // Last day of the year
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusYears(1);
 
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
@@ -22,7 +22,7 @@ public class YearlyIncomeCalculationStrategy implements IncomeCalculationStrateg
                 double totalCost = Double.parseDouble(parts[4]);
 
                 // Check if the reservation is within the current year
-                if (!reservationDate.isBefore(startOfYear) && !reservationDate.isAfter(endOfYear)) {
+                if (!reservationDate.isBefore(startDate) && !reservationDate.isAfter(endDate)) {
                     totalIncome += totalCost;
                 }
             }
