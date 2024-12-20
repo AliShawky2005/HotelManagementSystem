@@ -1,4 +1,7 @@
-package models;
+package models.Decorators;
+
+import models.Decorators.RoomDecorator;
+import models.Room;
 
 public class WiFiDecorator extends RoomDecorator {
     private static final double WIFI_COST = 10.0;

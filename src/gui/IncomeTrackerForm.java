@@ -1,13 +1,15 @@
 package gui;
 
 import models.IncomeTracker;
-import models.WeeklyIncomeCalculationStrategy;
-import models.MonthlyIncomeCalculationStrategy;
-import models.YearlyIncomeCalculationStrategy;
+import models.Strategy.CustomDateRangeCalculationStrategy;
+import models.Strategy.MonthlyIncomeCalculationStrategy;
+import models.Strategy.WeeklyIncomeCalculationStrategy;
+import models.Strategy.YearlyIncomeCalculationStrategy;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class IncomeTrackerForm {
@@ -99,46 +101,53 @@ public class IncomeTrackerForm {
     }
 
     private void showReportForPeriod(String period) {
-        LocalDate startDate = null;
         LocalDate endDate = LocalDate.now();
+        LocalDate startDate = null;
 
-        // Set date ranges based on the period
+        // Calculate the start date based on the selected period
         switch (period) {
             case "weekly":
-                startDate = endDate.minusDays(7);
+                incomeTracker.setIncomeCalculationStrategy(new WeeklyIncomeCalculationStrategy());
+                startDate = endDate.minusWeeks(1);
                 break;
             case "monthly":
+                incomeTracker.setIncomeCalculationStrategy(new MonthlyIncomeCalculationStrategy());
                 startDate = endDate.minusMonths(1);
                 break;
             case "yearly":
+                incomeTracker.setIncomeCalculationStrategy(new YearlyIncomeCalculationStrategy());
                 startDate = endDate.minusYears(1);
                 break;
         }
 
         if (startDate != null) {
             double totalIncome = IncomeTracker.calculateIncomeByDateRange(startDate, endDate);
-            reportArea.setText("=== " + period.toUpperCase() + " REPORT ===\n");
-            reportArea.append("From: " + startDate + " To: " + endDate + "\n");
-            reportArea.append("Total Income: $" + totalIncome + "\n\n");
-
-            // Detailed report
-            reportArea.append("Detailed Report:\n");
-            reportArea.append("-------------------------------------------\n");
+            updateReportArea(startDate, endDate, totalIncome);
             IncomeTracker.generateIncomeReportForPeriod(reportArea, startDate, endDate);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Invalid report period.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
 
+
+
     private void showCustomDateRangeReport() {
         try {
-            LocalDate startDate = LocalDate.parse(startDateField.getText());
-            LocalDate endDate = LocalDate.parse(endDateField.getText());
+            LocalDate startDate = LocalDate.parse(startDateField.getText(), DateTimeFormatter.ISO_DATE);
+            LocalDate endDate = LocalDate.parse(endDateField.getText(), DateTimeFormatter.ISO_DATE);
 
             if (startDate.isAfter(endDate)) {
                 throw new IllegalArgumentException("Start date cannot be after end date.");
             }
 
+            // Set a custom date range strategy
+            incomeTracker.setIncomeCalculationStrategy(new CustomDateRangeCalculationStrategy());
+
+            // Calculate income for the specified date range
             double totalIncome = incomeTracker.calculateIncomeByDateRange(startDate, endDate);
+
+            // Update the report area with the results
             updateReportArea(startDate, endDate, totalIncome);
             IncomeTracker.generateIncomeReportForPeriod(reportArea, startDate, endDate);
         } catch (DateTimeParseException e) {
@@ -147,6 +156,7 @@ public class IncomeTrackerForm {
             JOptionPane.showMessageDialog(frame, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     private void updateReportArea(LocalDate startDate, LocalDate endDate, double totalIncome) {
         SwingUtilities.invokeLater(() -> {

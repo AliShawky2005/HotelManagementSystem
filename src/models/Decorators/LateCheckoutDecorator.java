@@ -1,4 +1,7 @@
-package models;
+package models.Decorators;
+
+import models.Decorators.RoomDecorator;
+import models.Room;
 
 // Late Checkout Decorator
 public class LateCheckoutDecorator extends RoomDecorator {

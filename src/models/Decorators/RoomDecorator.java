@@ -1,11 +1,13 @@
-package models;
+package models.Decorators;
+
+import models.Room;
 
 public abstract class RoomDecorator extends Room {
 
     protected Room decoratedRoom;
 
     public RoomDecorator(Room decoratedRoom) {
-        super(decoratedRoom.roomNumber,decoratedRoom.numberOfNights);  ;
+        super(decoratedRoom.getRoomNumber(), decoratedRoom.getNumberOfNights());  ;
         this.decoratedRoom = decoratedRoom;
     }
 
