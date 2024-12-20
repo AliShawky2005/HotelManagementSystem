@@ -53,8 +53,13 @@ public class ReceptionistDashboard extends JFrame {
             }
         });
 
-        residentCheckoutButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Calculate Costs clicked!"));
-        assignRoomsButton.addActionListener(new ActionListener() {
+        residentCheckoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new ResidentCheckoutForm();
+            }
+        });        assignRoomsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();

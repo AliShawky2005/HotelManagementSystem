@@ -39,9 +39,9 @@ public class RoomFactory {
         }
     }
 
-    // Method to Save Reservation Details to a File
-    public static void saveRoomToFile(Room room) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("reservations.txt", true))) {
+    // Method to Save ReservationInfo Details to a File
+    public static void saveReservationToFile(Room room) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("current_reservations.txt", true))) {
             // Get current date for reservation
             String currentDate = LocalDate.now().toString();
 
@@ -53,16 +53,11 @@ public class RoomFactory {
                     room.calculateTotalPrice() + "," +
                     currentDate);
             writer.newLine(); // Add new line after each reservation
-            System.out.println("Reservation details saved to file.");
+            System.out.println("ReservationInfo details saved to file.");
         } catch (IOException e) {
             System.out.println("Error saving reservation to file: " + e.getMessage());
         }
     }
 
-    // Method to Update Room Availability in Rooms File
-    public static void updateRoomAvailability(int roomNumber, String availabilityStatus) {
-        // Placeholder logic: Reads from "rooms.txt" and updates availability.
-        // Actual implementation would involve reading, modifying, and overwriting the file.
-        System.out.println("Room availability updated for Room " + roomNumber + " to: " + availabilityStatus);
-    }
+
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import models.ReservationInfo;
 import models.Resident;
 import models.Worker;
 
@@ -88,6 +89,37 @@ public class ResidentController {
             }
         }
         return false;
+    }
+
+
+    public ReservationInfo getResidentReservation(String email)
+    {
+        ArrayList<ReservationInfo> reservations = DataStore.loadReservationsFromFile();
+
+        for (ReservationInfo reservation: reservations) {
+
+            if (reservation.getResidentEmail().equals(email))
+            {
+                return reservation;
+            }
+
+        }
+        return null;
+    }
+
+
+    public void removeResidentReservation(String email) {
+        // Load reservations from the file (or list, depending on your implementation)
+        ArrayList<ReservationInfo> reservations = DataStore.loadReservationsFromFile();
+
+        for (ReservationInfo reservation : reservations) {
+            if (reservation.getResidentEmail().equals(email)) {
+                // Reservation found, remove it from the list
+                reservations.remove(reservation);
+                DataStore.saveReservationsToFile(reservations);
+                break;  // Exit the loop once the reservation is removed
+            }
+        }
     }
 
 

@@ -139,7 +139,7 @@ public class AddResidentForm {
                 Room room = RoomFactory.createRoom(roomNumber,roomType,1, email);
                 saveReservation(room);
 
-                changeRoomStatus(roomNumber);
+                changeRoomStatus(roomNumber, false);
 
                 updateRoomsFile("rooms.txt");
                 populateRoomComboBox(roomNumberComboBox);

@@ -1,6 +1,4 @@
-101,faris@gmail.com,Single Room - with WiFi - with Breakfast,2,260.0,2023-01-10
 102,faris2@gmail.com,Double Room - with WiFi - with Breakfast,1,230.0,2023-02-15
-103,faris@gmail.com,Triple Room - with WiFi - with Breakfast,1,330.0,2023-03-20
 104,alex@gmail.com,Single Room - with WiFi - with Sea View,3,390.0,2023-04-25
 105,emily@gmail.com,Double Room - with WiFi - with Pool View,2,400.0,2023-05-30
 106,john@gmail.com,Triple Room - with WiFi - with Breakfast,4,520.0,2023-06-10
@@ -43,3 +41,7 @@
 143,lucas2@gmail.com,Single Room - with WiFi - with Sea View,3,370.0,2024-12-30
 144,ella2@gmail.com,Double Room - with WiFi - with Pool View,2,420.0,2024-12-31
 145,julia2@gmail.com,Triple Room - with WiFi - with City View,4,500.0,2024-12-31
+102,faris@gmail.com,Double Room - with WiFi - with Breakfast,2,460.0,2024-12-20
+102,bruh@gmail.com,Double Room - with WiFi - with Breakfast,2,460.0,2024-12-20
+103,faris@gmail.com,Triple Room,1,300.0,2024-12-20
+103,faris@gmail.com,Triple Room - with WiFi - with Breakfast,2,660.0,2024-12-20

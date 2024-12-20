@@ -1,5 +1,6 @@
 package gui;
 
+import controllers.DataStore;
 import models.IncomeTracker;
 import models.Strategy.CustomDateRangeCalculationStrategy;
 import models.Strategy.MonthlyIncomeCalculationStrategy;
@@ -52,8 +53,7 @@ public class IncomeTrackerForm {
         backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             frame.dispose(); // Close the current form
-            // Replace the following with navigation to the previous screen
-            System.out.println("Back button pressed!");
+            new ManagerDashboard(DataStore.loggedInUser);
         });
         backPanel.add(backButton);
         frame.add(backPanel, BorderLayout.WEST);

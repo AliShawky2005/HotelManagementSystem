@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class IncomeTracker {
-    private static final String RESERVATIONS_FILE = "reservations.txt";
+    private static final String RESERVATIONS_FILE = "past_reservations.txt";
     private static IncomeCalculationStrategy incomeCalculationStrategy;
 
     public IncomeTracker(IncomeCalculationStrategy incomeCalculationStrategy) {
@@ -43,7 +43,7 @@ public class IncomeTracker {
             String line;
             boolean hasReservations = false;
 
-            reportArea.append("=== Detailed Reservation Report ===\n");
+            reportArea.append("=== Detailed ReservationInfo Report ===\n");
             reportArea.append(String.format("From: %s To: %s\n\n", startDate, endDate));
 
             while ((line = reader.readLine()) != null) {

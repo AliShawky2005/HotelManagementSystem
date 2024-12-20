@@ -1,6 +1,9 @@
 package gui.ResidentGUI;
 
+import controllers.DataStore;
 import controllers.ResidentController;
+import controllers.RoomStatus;
+import models.ReservationInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,12 +54,20 @@ public class DeleteResidentForm {
 
             // Attempt to delete the resident
             boolean deleted = ResidentController.getInstance().deleteResident(email);
+
             if (deleted) {
                 JOptionPane.showMessageDialog(frame, "Resident deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 frame.dispose(); // Close the form after successful deletion
             } else {
                 JOptionPane.showMessageDialog(frame, "Resident not found. Please check the email and try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
+            ReservationInfo reservation = ResidentController.getInstance().getResidentReservation(email);
+            ResidentController.getInstance().removeResidentReservation(email);
+            DataStore.addReservationToPastReservations(reservation);
+            int roomNumber = reservation.getRoomNumber();
+            RoomStatus.changeRoomStatus(roomNumber, true);
+            RoomStatus.updateRoomsFile("rooms.txt");
         });
         frame.add(deleteButton, gbc);
 

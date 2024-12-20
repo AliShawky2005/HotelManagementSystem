@@ -26,7 +26,7 @@ public class RoomAssignmentForm {
     private JButton assignRoomButton;
     private JTextArea resultArea;
     private JButton backButton;
-
+    private JButton clearButton;  // New button to clear the form
 
     private JTextField nameField;
     private JTextField emailField;
@@ -144,6 +144,17 @@ public class RoomAssignmentForm {
         assignRoomButton.addActionListener(new AssignRoomListener());
         panel.add(assignRoomButton, gbc);
 
+        // Row 9: Clear Button
+        gbc.gridx = 0; gbc.gridy = 8; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER;
+        clearButton = new JButton("Clear Form");
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearForm();  // Clear the form fields when the button is clicked
+            }
+        });
+        panel.add(clearButton, gbc);
+
         return panel;
     }
 
@@ -161,7 +172,15 @@ public class RoomAssignmentForm {
     }
 
     // Populate the room number combo box
-
+    private void populateRoomComboBox(JComboBox<String> comboBox) {
+        // Assuming the availableRooms list is populated with available room data
+        // Loop through available rooms and add room numbers to the comboBox
+        for (RoomInfo room : availableRooms) {
+            if (room.isAvailable()) {
+                comboBox.addItem(String.valueOf(room.getRoomNumber()));
+            }
+        }
+    }
 
     // Update room description when a room is selected
     private void updateRoomDescription() {
@@ -176,7 +195,20 @@ public class RoomAssignmentForm {
         }
     }
 
-
+    // Clear all the form fields
+    private void clearForm() {
+        nameField.setText("");
+        emailField.setText("");
+        phoneField.setText("");
+        nightsField.setText("");
+        roomNumberComboBox.setSelectedIndex(0);  // Reset to default value (first item in the combo box)
+        roomDescriptionLabel.setText("Not Selected");
+        wifiCheckBox.setSelected(false);
+        breakfastCheckBox.setSelected(false);
+        lateCheckoutCheckBox.setSelected(false);
+        resultArea.setText("");  // Clear the result area
+        populateRoomComboBox(roomNumberComboBox);
+    }
 
     // Listener for the "Assign Room" button
     private class AssignRoomListener implements ActionListener {
@@ -194,10 +226,6 @@ public class RoomAssignmentForm {
                     return;
                 }
 
-
-                // Create a new Resident object
-
-
                 // Get selected room and night details
                 int selectedRoomNumber = Integer.parseInt((String) roomNumberComboBox.getSelectedItem());
                 int nights = Integer.parseInt(nightsField.getText().trim());
@@ -209,6 +237,7 @@ public class RoomAssignmentForm {
                     JOptionPane.showMessageDialog(frame, "Failed to add resident. Email already in use.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+
                 // Create the room
                 Room room = RoomFactory.createRoom(selectedRoomNumber, roomType, nights, residentEmail);
 
@@ -221,13 +250,13 @@ public class RoomAssignmentForm {
                 saveReservation(room);
 
                 // Mark the room as unavailable
-                changeRoomStatus(selectedRoomNumber);
+                changeRoomStatus(selectedRoomNumber, false);
                 updateRoomsFile("rooms.txt");
                 populateRoomComboBox(roomNumberComboBox);
 
                 // Show the reservation details in the result area
                 resultArea.setText("Room " + selectedRoomNumber + " Assigned Successfully" + " for "
-                + residentName + "!\n");
+                        + residentName + "!\n");
                 resultArea.append(("Resident Email: ") + residentEmail + "\n");
                 resultArea.append("Room Description: " + room.getDescription() + "\n");
                 resultArea.append("Price Per Night: $" + room.getPrice() + "\n");
@@ -256,5 +285,4 @@ public class RoomAssignmentForm {
         public boolean isAvailable() { return available; }
         public void setAvailable(boolean available) { this.available = available; }
     }
-
 }

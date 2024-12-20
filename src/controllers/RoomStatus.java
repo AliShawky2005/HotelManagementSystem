@@ -29,7 +29,7 @@ public  class RoomStatus {
     }
     // Save reservation to file
     public static void saveReservation(Room room) {
-        RoomFactory.saveRoomToFile(room);
+        RoomFactory.saveReservationToFile(room);
     }
 
     // Update rooms.txt file after marking a room as unavailable
@@ -53,11 +53,11 @@ public  class RoomStatus {
         return null;
     }
 
-    public static void changeRoomStatus(int selectedRoomNumber)
+    public static void changeRoomStatus(int selectedRoomNumber, boolean availability)
     {
         for (RoomAssignmentForm.RoomInfo r : availableRooms) {
             if (r.getRoomNumber() == selectedRoomNumber) {
-                r.setAvailable(!r.isAvailable());
+                r.setAvailable(availability);
                 break;
             }
         }
