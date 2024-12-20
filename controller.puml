@@ -1,0 +1,63 @@
+@startuml
+class controllers.RoomStatus {
++ {static} List<RoomAssignmentForm.RoomInfo> availableRooms
++ {static} void populateRoomComboBox(JComboBox<String>)
++ {static} void saveReservation(Room)
++ {static} void updateRoomsFile(String)
++ {static} String getRoomDescription(int)
++ {static} void changeRoomStatus(int,boolean)
+}
+
+
+class controllers.WorkerController {
+- {static} WorkerController instance
+- ArrayList<Worker> workers
++ {static} WorkerController getInstance()
++ ArrayList<Worker> getWorkers()
++ void addWorker(Worker)
++ boolean updateWorker(String,Worker)
++ boolean deleteWorker(String)
+}
+
+
+class controllers.ResidentController {
+- {static} ResidentController instance
+- {static} List<Resident> residents
++ List<Resident> getResidents()
++ {static} ResidentController getInstance()
++ boolean addResident(Resident)
++ boolean validateEmail(String)
++ {static} boolean isNewResident(String,List<Resident>)
++ Resident findResidentByEmail(String)
++ boolean deleteResident(String)
++ boolean updateResident(String,Resident)
++ ReservationInfo getResidentReservation(String)
++ void removeResidentReservation(String)
+}
+
+
+class controllers.DataStore {
+- {static} String USERS_FILE
+- {static} String WORKERS_FILE
+- {static} String RESIDENTS_FILE
+- {static} String PAST_RESERVATIONS_FILE
+- {static} String CURRENT_RESERVATIONS_FILE
+- {static} String ROOMS_FILE
+- {static} HashMap<String,User> users
++ {static} User loggedInUser
++ {static} HashMap<String,User> getUsers()
++ {static} void addUser(String,User)
+- {static} void loadUsersFromFile()
+- {static} void saveUsersToFile()
++ {static} ArrayList<Worker> loadWorkers()
++ {static} List<RoomAssignmentForm.RoomInfo> loadRoomDataFromFile()
++ {static} void saveWorkers(ArrayList<Worker>)
++ {static} List<Resident> loadResidentsFromFile()
++ {static} void saveResidents(List<Resident>)
++ {static} ArrayList<ReservationInfo> loadReservationsFromFile()
++ {static} void saveReservationsToFile(List<ReservationInfo>)
++ {static} void addReservationToPastReservations(ReservationInfo)
+}
+
+
+@enduml

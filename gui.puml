@@ -1,0 +1,187 @@
+@startuml
+class gui.ReceptionistDashboard {
++ <<Create>> ReceptionistDashboard(User)
+}
+
+class gui.WorkerGUI.DeleteWorkerForm {
+- JFrame frame
+- JTextField nameField
++ <<Create>> DeleteWorkerForm()
+}
+
+
+class gui.WorkerGUI.UpdateWorkerForm {
+- JFrame frame
+- JTextField searchField
++ <<Create>> UpdateWorkerForm()
+}
+
+
+class gui.WorkerGUI.WorkerManagementMenu {
+- JFrame frame
++ <<Create>> WorkerManagementMenu()
+}
+
+
+class gui.IncomeTrackerForm {
+- JFrame frame
+- JTextArea reportArea
+- JButton weeklyButton
+- JTextField startDateField
+- IncomeTracker incomeTracker
++ <<Create>> IncomeTrackerForm()
+- void initializeUI()
+- JPanel createButtonPanel()
+- JPanel createCustomRangePanel()
+- void showReportForPeriod(String)
+- void showCustomDateRangeReport()
+- void updateReportArea(LocalDate,LocalDate,double)
+}
+
+
+class gui.RoomsDetailsForm {
++ void showDetails()
+}
+
+class gui.ResidentGUI.DeleteResidentForm {
+- JFrame frame
+- JTextField emailField
++ <<Create>> DeleteResidentForm()
+}
+
+
+class gui.ResidentCheckoutForm {
+- JTextField emailField
+- JLabel roomNumberLabel
+- JLabel roomDescriptionLabel
+- JLabel numberOfNightsLabel
+- JLabel reservationDateLabel
+- JLabel totalCostLabel
+- JButton checkoutButton
+- JButton backButton
++ <<Create>> ResidentCheckoutForm()
+- void resetForm()
+}
+
+
+class gui.ResidentGUI.AddResidentForm {
+- JFrame frame
+- JTextField nameField
+- JComboBox roomNumberComboBox
+- List<RoomAssignmentForm.RoomInfo> availableRooms
++ <<Create>> AddResidentForm()
+}
+
+
+class gui.LoginForm {
+- JTextField usernameField
+- JPasswordField passwordField
++ <<Create>> LoginForm()
+}
+
+
+class gui.ResidentGUI.ResidentDetailsForm {
++ <<Create>> ResidentDetailsForm()
+}
+
+class gui.WorkerGUI.WorkerDetailsForm {
++ void viewWorkerDetails()
+}
+
+class gui.ResidentMenuUI {
+- JFrame frame
+- JTextField nameField
+- JTextField emailField
+- JTextField contactField
+- JTextArea servicesArea
+- JTextArea costArea
+- JTextField OldEmailField
+}
+
+class gui.RegistrationForm {
+- JTextField usernameField
+- JPasswordField passwordField
+- JComboBox<String> roleComboBox
++ <<Create>> RegistrationForm()
+}
+
+
+class gui.RoomAssignmentForm {
+- JFrame frame
+- JComboBox<String> roomNumberComboBox
+- JLabel roomDescriptionLabel
+- JTextField nightsField
+- JCheckBox wifiCheckBox
+- JCheckBox breakfastCheckBox
+- JCheckBox lateCheckoutCheckBox
+- JButton assignRoomButton
+- JTextArea resultArea
+- JButton backButton
+- JButton clearButton
+- JTextField nameField
+- JTextField emailField
+- JTextField phoneField
++ <<Create>> RoomAssignmentForm()
+- void initializeUI()
+- JPanel createInputPanel()
+- JPanel createResultPanel()
+- void populateRoomComboBox(JComboBox<String>)
+- void updateRoomDescription()
+- void clearForm()
+}
+
+
+class gui.RoomAssignmentForm$AssignRoomListener {
++ void actionPerformed(ActionEvent)
+}
+
+class gui.RoomAssignmentForm$RoomInfo {
+- int roomNumber
+- String description
+- boolean available
++ <<Create>> RoomInfo(int,String,boolean)
++ int getRoomNumber()
++ String getDescription()
++ boolean isAvailable()
++ void setAvailable(boolean)
+}
+
+
+class gui.ResidentGUI.ResidentManagementMenu {
+- JFrame frame
++ <<Create>> ResidentManagementMenu()
+}
+
+
+class gui.ResidentGUI.EditResidentForm {
+- JFrame frame
+- JTextField nameField
+- JTextField emailField
+- JTextField contactField
+- JTextField roomNumberField
++ <<Create>> EditResidentForm()
+}
+
+
+class gui.WorkerGUI.AddWorkerForm {
+- JFrame frame
+- JTextField nameField
++ <<Create>> AddWorkerForm()
+}
+
+
+class gui.ManagerDashboard {
++ <<Create>> ManagerDashboard(User)
+}
+
+
+
+gui.JFrame <|-- gui.ReceptionistDashboard
+gui.JFrame <|-- gui.ResidentCheckoutForm
+gui.JFrame <|-- gui.LoginForm
+gui.JFrame <|-- gui.RegistrationForm
+gui.RoomAssignmentForm +.. gui.RoomAssignmentForm$AssignRoomListener
+gui.ActionListener <|.. gui.RoomAssignmentForm$AssignRoomListener
+gui.RoomAssignmentForm +.. gui.RoomAssignmentForm$RoomInfo
+gui.JFrame <|-- gui.ManagerDashboard
+@enduml

@@ -1,0 +1,172 @@
+@startuml
+class models.IncomeTracker {
+- {static} String RESERVATIONS_FILE
+- {static} IncomeCalculationStrategy incomeCalculationStrategy
++ <<Create>> IncomeTracker(IncomeCalculationStrategy)
++ void setIncomeCalculationStrategy(IncomeCalculationStrategy)
++ {static} double calculateIncomeByDateRange(LocalDate,LocalDate)
++ {static} void generateIncomeReportForPeriod(JTextArea,LocalDate,LocalDate)
+}
+
+
+class models.Decorators.WiFiDecorator {
+- {static} double WIFI_COST
++ <<Create>> WiFiDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+class models.Decorators.LateCheckoutDecorator {
+- {static} double LATE_CHECKOUT_COST
++ <<Create>> LateCheckoutDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+interface models.Strategy.IncomeCalculationStrategy {
+~ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class models.Strategy.MonthlyIncomeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class models.Strategy.CustomDateRangeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class models.ReservationInfo {
+- int roomNumber
+- String residentEmail
+- String description
+- int numberOfNights
+- double totalPrice
+- String reservationDate
++ <<Create>> ReservationInfo(int,String,String,int,double,String)
++ int getRoomNumber()
++ String getResidentEmail()
++ String getDescription()
++ int getNumberOfNights()
++ double getTotalPrice()
++ String getReservationDate()
+}
+
+
+abstract class models.Decorators.RoomDecorator {
+# Room decoratedRoom
++ <<Create>> RoomDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+class models.User {
+- String username
+- String password
+- char role
++ <<Create>> User(String,String,char)
++ String getUsername()
++ String getPassword()
++ char getRole()
+}
+
+
+class models.Resident {
+- String residentName
+- String email
+- int contactInfo
+- int roomNumber
++ <<Create>> Resident(String,String,int,int)
++ String getResidentName()
++ String getEmail()
++ int getContactInfo()
++ int getRoomNumber()
+}
+
+
+class models.Strategy.YearlyIncomeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class models.Decorators.BreakfastDecorator {
+- {static} double BREAKFAST_COST
++ <<Create>> BreakfastDecorator(Room)
++ String getDescription()
++ double getPrice()
+}
+
+
+class models.RoomFactory {
++ {static} Room createRoom(int,String,int,String)
++ {static} void saveReservationToFile(Room)
+}
+
+abstract class models.Room {
+# int roomNumber
+# String description
+# String residentEmail
+# int numberOfNights
++ <<Create>> Room(int,int,String)
++ String getResidentEmail()
++ int getRoomNumber()
++ int getNumberOfNights()
++ {abstract}double getPrice()
++ String getDescription()
++ String bookRoom()
++ double calculateTotalPrice()
++ String toFileString()
+}
+
+
+class models.singleRoom {
++ <<Create>> singleRoom(int,int,String)
++ double getPrice()
+}
+
+class models.doubleRoom {
++ <<Create>> doubleRoom(int,int,String)
++ double getPrice()
+}
+
+class models.tripleRoom {
++ <<Create>> tripleRoom(int,int,String)
++ double getPrice()
+}
+
+class models.Strategy.WeeklyIncomeCalculationStrategy {
++ double calculateIncome(BufferedReader,LocalDate,LocalDate)
+}
+
+class models.Worker {
+- String name
+- String phoneNumber
+- double salary
+- String jobTitle
++ <<Create>> Worker(String,String,double,String)
++ String getName()
++ void setName(String)
++ String getPhoneNumber()
++ void setPhoneNumber(String)
++ double getSalary()
++ void setSalary(double)
++ String getJobTitle()
++ void setJobTitle(String)
+}
+
+
+
+
+models.Decorators.RoomDecorator <|-- models.Decorators.WiFiDecorator
+models.Decorators.RoomDecorator <|-- models.Decorators.LateCheckoutDecorator
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.MonthlyIncomeCalculationStrategy
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.CustomDateRangeCalculationStrategy
+models.Room <|-- models.Decorators.RoomDecorator
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.YearlyIncomeCalculationStrategy
+models.Decorators.RoomDecorator <|-- models.Decorators.BreakfastDecorator
+models.Room <|-- models.singleRoom
+models.Room <|-- models.doubleRoom
+models.Room <|-- models.tripleRoom
+models.Strategy.IncomeCalculationStrategy <|.. models.Strategy.WeeklyIncomeCalculationStrategy
+@enduml
