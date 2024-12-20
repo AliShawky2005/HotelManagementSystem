@@ -3,11 +3,14 @@ package gui;
 import javax.swing.*;
 import models.*;
 import controllers.*;
+import models.Decorators.BreakfastDecorator;
+import models.Decorators.LateCheckoutDecorator;
+import models.Decorators.WiFiDecorator;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static controllers.RoomStatus.*;

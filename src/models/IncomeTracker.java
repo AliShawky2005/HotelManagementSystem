@@ -1,112 +1,88 @@
 package models;
 
+import models.Strategy.IncomeCalculationStrategy;
+
 import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class IncomeTracker {
-
     private static final String RESERVATIONS_FILE = "reservations.txt";
+    private static IncomeCalculationStrategy incomeCalculationStrategy;
 
-    // Method to calculate total income for a given date range
+    public IncomeTracker(IncomeCalculationStrategy incomeCalculationStrategy) {
+        this.incomeCalculationStrategy = incomeCalculationStrategy;
+    }
+
+    public void setIncomeCalculationStrategy(IncomeCalculationStrategy incomeCalculationStrategy) {
+        this.incomeCalculationStrategy = incomeCalculationStrategy;
+    }
+
     public static double calculateIncomeByDateRange(LocalDate startDate, LocalDate endDate) {
         double totalIncome = 0.0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(RESERVATIONS_FILE))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-
-                if (parts.length >= 5) {
-                    // Extract the reservation date and total cost
-                    LocalDate reservationDate = LocalDate.parse(parts[5], DateTimeFormatter.ISO_DATE);
-                    double totalCost = Double.parseDouble(parts[4]);
-
-                    // Check if the reservation date is within the specified range
-                    if ((reservationDate.isEqual(startDate) || reservationDate.isAfter(startDate)) &&
-                            (reservationDate.isEqual(endDate) || reservationDate.isBefore(endDate))) {
-                        totalIncome += totalCost;
-                    }
-                }
-            }
+            totalIncome = incomeCalculationStrategy.calculateIncome(reader, startDate, endDate);
         } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            System.out.println("Error calculating income: " + e.getMessage());
         }
 
         return totalIncome;
     }
 
-    // Method to generate detailed income report for a given date range
     public static void generateIncomeReportForPeriod(JTextArea reportArea, LocalDate startDate, LocalDate endDate) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(RESERVATIONS_FILE))) {
+        File reservationsFile = new File(RESERVATIONS_FILE);
+        if (!reservationsFile.exists()) {
+            reportArea.append("No reservation data found.\n");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(reservationsFile))) {
             String line;
+            boolean hasReservations = false;
+
+            reportArea.append("=== Detailed Reservation Report ===\n");
+            reportArea.append(String.format("From: %s To: %s\n\n", startDate, endDate));
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-
                 if (parts.length >= 5) {
-                    LocalDate reservationDate = LocalDate.parse(parts[5], DateTimeFormatter.ISO_DATE);
+                    try {
+                        LocalDate reservationDate = LocalDate.parse(parts[5], DateTimeFormatter.ISO_DATE);
+                        double totalCost = Double.parseDouble(parts[4]);
 
-                    // Check if the reservation date is within the range
-                    if ((reservationDate.isEqual(startDate) || reservationDate.isAfter(startDate)) &&
-                            (reservationDate.isEqual(endDate) || reservationDate.isBefore(endDate))) {
-                        reportArea.append(String.format("Room: %s | Email: %s | Description: %s | Nights: %s | Total: $%s | Date: %s\n",
-                                parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]));
+                        // Check if the reservation date is within the range
+                        if (!reservationDate.isBefore(startDate) && !reservationDate.isAfter(endDate)) {
+                            // Append reservation details to JTextArea
+                            String reservationDetails = String.format(
+                                    "Room: %s | Email: %s | Description: %s | Nights: %s | Total: $%.2f | Date: %s\n",
+                                    parts[0], parts[1], parts[2], parts[3], totalCost, reservationDate
+                            );
+
+                            SwingUtilities.invokeLater(() -> reportArea.append(reservationDetails));
+                            hasReservations = true;
+                        }
+                    } catch (DateTimeParseException | NumberFormatException e) {
+                        System.err.println("Error parsing reservation entry: " + line + " -> " + e.getMessage());
                     }
+                } else {
+                    System.err.println("Invalid reservation entry: " + line);
                 }
             }
-        } catch (IOException e) {
-            reportArea.append("Error generating report: " + e.getMessage());
-        }
-    }
 
-    // Method to display all income data (for debugging purposes)
-    public static void displayAllIncomeData() {
-        System.out.println("=== All Income Data ===");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(RESERVATIONS_FILE))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+            if (!hasReservations) {
+                reportArea.append("No reservations found for the specified date range.\n");
             }
         } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            System.err.println("Error reading file: " + e.getMessage());
+            reportArea.append("Error generating detailed report: " + e.getMessage() + "\n");
         }
+
+        reportArea.revalidate();
+        reportArea.repaint();
     }
 
-    // Optional: Method to add test data to the reservations file
-    public static void addTestData() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RESERVATIONS_FILE, true))) {
-            writer.write("101,Single Room,3,300.0,2024-06-14");
-            writer.newLine();
-            writer.write("102,Double Room,2,400.0,2024-06-15");
-            writer.newLine();
-            writer.write("103,Triple Room,5,750.0,2024-06-18");
-            writer.newLine();
-            writer.write("104,Single Room,1,100.0,2024-06-19");
-            writer.newLine();
-            System.out.println("Test data added.");
-        } catch (IOException e) {
-            System.out.println("Error writing test data: " + e.getMessage());
-        }
-    }
 
-//    public static void main(String[] args) {
-//        // Test the IncomeTracker functionality
-//        LocalDate startDate = LocalDate.now().minusDays(7);
-//        LocalDate endDate = LocalDate.now();
-//
-//        System.out.println("=== Weekly Income Report ===");
-//        double weeklyIncome = calculateIncomeByDateRange(startDate, endDate);
-//        System.out.println("Total Income: $" + weeklyIncome);
-//
-//        // Display all data
-//        displayAllIncomeData();
-//
-//        // Add test data (optional)
-//        // addTestData();
-//    }
 }
